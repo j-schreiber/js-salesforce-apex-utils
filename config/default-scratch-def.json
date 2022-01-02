@@ -1,0 +1,24 @@
+{
+  "orgName": "Lietzau Consulting",
+  "edition": "Enterprise",
+  "features": ["StateAndCountryPicklist", "MultiCurrency", "PersonAccounts"],
+  "country": "DE",
+  "language": "en_US",
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "pathAssistantSettings": {
+      "pathAssistantEnabled": true
+    },
+    "languageSettings": {
+      "enableTranslationWorkbench": true
+    },
+    "chatterSettings": {
+      "enableChatter": true
+    },
+    "quoteSettings": {
+      "enableQuote": true
+    }
+  }
+}

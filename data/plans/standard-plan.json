@@ -1,0 +1,20 @@
+[
+  {
+    "sobject": "CurrencyType",
+    "saveRefs": false,
+    "resolveRefs": false,
+    "files": ["../currency-types.json"]
+  },
+  {
+    "sobject": "Account",
+    "saveRefs": true,
+    "resolveRefs": false,
+    "files": ["../accounts.json"]
+  },
+  {
+    "sobject": "Contact",
+    "saveRefs": true,
+    "resolveRefs": true,
+    "files": ["../contacts.json"]
+  }
+]

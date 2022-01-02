@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>One_One_One_Setup_Hello_World</fullName>
+        <categories>ui,button,label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>A hello World Label for the 1:1:1 Setup Template</shortDescription>
+        <value>Hello, World!</value>
+    </labels>
+</CustomLabels>

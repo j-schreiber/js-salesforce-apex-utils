@@ -1,0 +1,264 @@
+version: 2.1
+
+orbs:
+  sfdx: circleci/salesforce-sfdx@2.2.0
+  node: circleci/node@4.7.0
+
+executors:
+  default:
+    docker:
+      - image: cimg/base:2021.04
+
+jobs:
+  scratch_org_test:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - sfdx/install
+      - node/install
+      - node/install-packages
+      - run:
+          name: Setup SFDX CLI
+          command: |
+            echo $SFDX_JWT_KEY | base64 --decode --ignore-garbage > ./server.key
+            sfdx auth:jwt:grant --clientid $SFDX_CONSUMER_KEY --jwtkeyfile server.key --username $USERNAME_PRODUCTION
+            mkdir -p force-app
+      - run:
+          name: Run Org Setup
+          command: |
+            bash scripts/setup/macOS.sh -a CircleCi -v $USERNAME_PRODUCTION -d 1
+      - run:
+          name: Run Apex Tests (Scratch Org)
+          command: |
+            mkdir -p test-results/apex
+            export SFDX_IMPROVED_CODE_COVERAGE="true"
+            set +e
+            sfdx force:apex:test:run -w 10 -u CircleCi -r junit -d test-results/apex --codecoverage --detailedcoverage
+            exitCode=$?
+            rm -f test-results/apex/test-result.xml
+            exit $exitCode
+      - run:
+          name: Clean Scratch Org
+          command: |
+            sfdx force:org:delete -u CircleCi --noprompt
+          when: always
+      - store_test_results:
+          path: test-results
+
+  build_and_install_staging:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - sfdx/install
+      - run:
+          name: Setup SFDX CLI
+          command: |
+            echo $SFDX_JWT_KEY | base64 --decode --ignore-garbage > ./server.key
+            sfdx auth:jwt:grant --clientid $SFDX_CONSUMER_KEY --jwtkeyfile server.key --username $USERNAME_PRODUCTION
+            sfdx auth:jwt:grant --clientid $SFDX_CONSUMER_KEY_STAGING --jwtkeyfile server.key --username $USERNAME_STAGING --instanceurl https://test.salesforce.com
+            mkdir -p force-app
+      - run:
+          name: Build Beta Package
+          command: |
+            sfdx force:package:version:create -p $PACKAGE_ID -v $USERNAME_PRODUCTION -w 60 -k $INSTALLATION_KEY --skipvalidation
+      - run:
+          name: Retrieve Originally Installed Package Version For Rollback
+          command: |
+            output=$(sfdx force:data:soql:query -t -q "SELECT SubscriberPackageId FROM Package2 WHERE Id = '$PACKAGE_ID'" -u $USERNAME_PRODUCTION)
+            SUBSCRIBER_PACKAGE_ID=$(echo $output | grep -o '033[a-zA-Z0-9]*')
+            output=$(sfdx force:data:soql:query -t -q "SELECT SubscriberPackageVersionId FROM InstalledSubscriberPackage WHERE SubscriberPackageId = '$SUBSCRIBER_PACKAGE_ID'" -u $USERNAME_STAGING)
+            SUBSCRIBER_PACKAGE_VERSION_ID=$(echo $output | grep -o '04t[a-zA-Z0-9]*')
+            if [ -z $SUBSCRIBER_PACKAGE_VERSION_ID ]; then
+                echo "No installed version found. Rollback disabled."
+            else
+                echo "Storing originally installed package version for rollback: $SUBSCRIBER_PACKAGE_VERSION_ID ..."
+                echo $SUBSCRIBER_PACKAGE_VERSION_ID >> rollback_package_version_id.txt
+            fi
+      - run:
+          name: Install Package (Staging)
+          command: |
+            query=$(sfdx force:data:soql:query -t -q "SELECT SubscriberpackageVersionId FROM Package2Version WHERE Package2Id = '$PACKAGE_ID' ORDER BY CreatedDate DESC LIMIT 1" -u $USERNAME_PRODUCTION)
+            SUBSCRIBER_PACKAGE_VERSION_ID=$(echo $query | grep -o '04t[a-zA-Z0-9]*')
+            echo "Installing latest package version: $SUBSCRIBER_PACKAGE_VERSION_ID ..."
+            sfdx force:package:install -w 10 -b 10 -u $USERNAME_STAGING -p $SUBSCRIBER_PACKAGE_VERSION_ID -k $INSTALLATION_KEY -r
+      - run:
+          name: Deploy Source (Staging)
+          command: |
+            sfdx force:source:deploy -p src/deploy -u $USERNAME_STAGING -w 10 -l NoTestRun
+            sfdx force:source:deploy -p src/unpackaged-deploy -u $USERNAME_STAGING -w 10 -l NoTestRun
+      - run:
+          name: Run Apex Tests (Staging)
+          command: |
+            mkdir -p test-results/apex
+            export SFDX_IMPROVED_CODE_COVERAGE="true"
+            set +e
+            sfdx force:apex:test:run -w 10 -u $USERNAME_STAGING -r junit -d test-results/apex
+            exitCode=$?
+            rm -f test-results/apex/test-result.xml
+            exit $exitCode
+      - run:
+          name: Rollback To Previous Package Version
+          command: |
+            ROLLBACK_PACKAGE_VERSION=rollback_package_version_id.txt
+            if [ -f "$ROLLBACK_PACKAGE_VERSION" ]; then
+                read -r original_package_version < $ROLLBACK_PACKAGE_VERSION
+                echo "Rolling back to original package version ... $original_package_version"
+                sfdx force:package:install -w 10 -b 10 -u $USERNAME_STAGING -p $original_package_version -k $INSTALLATION_KEY -r
+            else
+                echo "No package version was installed. Rollback disabled."
+            fi
+          when: on_fail
+      - store_test_results:
+          path: test-results
+
+  build_validated_package:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - sfdx/install
+      - run:
+          name: Setup SFDX CLI
+          command: |
+            echo $SFDX_JWT_KEY | base64 --decode --ignore-garbage > ./server.key
+            sfdx auth:jwt:grant --clientid $SFDX_CONSUMER_KEY --jwtkeyfile server.key --username $USERNAME_PRODUCTION
+            mkdir -p force-app
+      - run:
+          name: Build Production Package
+          command: |
+            sfdx force:package:version:create -p $PACKAGE_ID -v $USERNAME_PRODUCTION -w 60 -k $INSTALLATION_KEY -c
+
+  install_production:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - sfdx/install
+      - run:
+          name: Setup SFDX CLI
+          command: |
+            echo $SFDX_JWT_KEY | base64 --decode --ignore-garbage > ./server.key
+            sfdx auth:jwt:grant --clientid $SFDX_CONSUMER_KEY --jwtkeyfile server.key --username $USERNAME_PRODUCTION
+            sfdx auth:jwt:grant --clientid $SFDX_CONSUMER_KEY_STAGING --jwtkeyfile server.key --username $USERNAME_STAGING --instanceurl https://test.salesforce.com
+            mkdir -p force-app
+      - run:
+          name: Retrieve Originally Installed Package Version For Rollback
+          command: |
+            output=$(sfdx force:data:soql:query -t -q "SELECT SubscriberPackageId FROM Package2 WHERE Id = '$PACKAGE_ID'" -u $USERNAME_PRODUCTION)
+            SUBSCRIBER_PACKAGE_ID=$(echo $output | grep -o '033[a-zA-Z0-9]*')
+            output=$(sfdx force:data:soql:query -t -q "SELECT SubscriberPackageVersionId FROM InstalledSubscriberPackage WHERE SubscriberPackageId = '$SUBSCRIBER_PACKAGE_ID'" -u $USERNAME_PRODUCTION)
+            SUBSCRIBER_PACKAGE_VERSION_ID=$(echo $output | grep -o '04t[a-zA-Z0-9]*')
+            if [ -z $SUBSCRIBER_PACKAGE_VERSION_ID ]; then
+                echo "No installed version found. Rollback disabled."
+            else
+                echo "Storing originally installed package version for rollback: $SUBSCRIBER_PACKAGE_VERSION_ID ..."
+                echo $SUBSCRIBER_PACKAGE_VERSION_ID >> rollback_package_version_id.txt
+            fi
+      - run:
+          name: Install Latest Validated Package (Staging)
+          command: |
+            query=$(sfdx force:data:soql:query -t -q "SELECT SubscriberpackageVersionId FROM Package2Version WHERE Package2Id = '$PACKAGE_ID' AND ValidationSkipped = false ORDER BY CreatedDate DESC LIMIT 1" -u $USERNAME_PRODUCTION)
+            SUBSCRIBER_PACKAGE_VERSION_ID=$(echo $query | grep -o '04t[a-zA-Z0-9]*')
+            echo "Installing latest package version: $SUBSCRIBER_PACKAGE_VERSION_ID ..."
+            sfdx force:package:install -w 10 -b 10 -u $USERNAME_STAGING -p $SUBSCRIBER_PACKAGE_VERSION_ID -k $INSTALLATION_KEY -r
+      - run:
+          name: Deploy Source (Staging)
+          command: |
+            sfdx force:source:deploy -p src/deploy -u $USERNAME_STAGING -w 10 -l RunLocalTests
+      - run:
+          name: Promote Latest Build
+          command: |
+            query=$(sfdx force:data:soql:query -t -q "SELECT SubscriberpackageVersionId FROM Package2Version WHERE Package2Id = '$PACKAGE_ID' AND ValidationSkipped = false ORDER BY CreatedDate DESC LIMIT 1" -u $USERNAME_PRODUCTION)
+            SUBSCRIBER_PACKAGE_VERSION_ID=$(echo $query | grep -o '04t[a-zA-Z0-9]*')
+            echo "Promoting latest package version: $SUBSCRIBER_PACKAGE_VERSION_ID ..."
+            sfdx force:package:version:promote -v $USERNAME_PRODUCTION -p $SUBSCRIBER_PACKAGE_VERSION_ID -n
+      - run:
+          name: Install Latest Validated Package (Production)
+          command: |
+            query=$(sfdx force:data:soql:query -t -q "SELECT SubscriberpackageVersionId FROM Package2Version WHERE Package2Id = '$PACKAGE_ID' AND ValidationSkipped = false ORDER BY CreatedDate DESC LIMIT 1" -u $USERNAME_PRODUCTION)
+            SUBSCRIBER_PACKAGE_VERSION_ID=$(echo $query | grep -o '04t[a-zA-Z0-9]*')
+            echo "Installing latest package version: $SUBSCRIBER_PACKAGE_VERSION_ID ..."
+            sfdx force:package:install -w 10 -b 10 -u $USERNAME_PRODUCTION -p $SUBSCRIBER_PACKAGE_VERSION_ID -k $INSTALLATION_KEY -r
+      - run:
+          name: Deploy Source (Production)
+          command: |
+            sfdx force:source:deploy -p src/deploy -u $USERNAME_PRODUCTION -w 10 -l RunLocalTests
+      - run:
+          name: Run Apex Tests (Production)
+          command: |
+            mkdir -p test-results/apex
+            export SFDX_IMPROVED_CODE_COVERAGE="true"
+            set +e
+            sfdx force:apex:test:run -w 10 -u $USERNAME_PRODUCTION -r junit -d test-results/apex
+            exitCode=$?
+            rm -f test-results/apex/test-result.xml
+            exit $exitCode
+      - run:
+          name: Rollback To Previous Package Version
+          command: |
+            ROLLBACK_PACKAGE_VERSION=rollback_package_version_id.txt
+            if [ -f "$ROLLBACK_PACKAGE_VERSION" ]; then
+                read -r original_package_version < $ROLLBACK_PACKAGE_VERSION
+                echo "Rolling back to original package version ... $original_package_version"
+                sfdx force:package:install -w 10 -b 10 -u $USERNAME_PRODUCTION -p $original_package_version -k $INSTALLATION_KEY -r
+            else
+                echo "No package version was installed. Rollback disabled."
+            fi
+          when: on_fail
+      - store_test_results:
+          path: test-results
+
+workflows:
+  package_build:
+    jobs:
+      - scratch_org_test:
+          context:
+            - salesforce
+      - build_validated_package:
+          context:
+            - salesforce
+          filters:
+            branches:
+              only:
+                - /^version/.*/
+      - approve_staging:
+          type: approval
+          requires:
+            - scratch_org_test
+          filters:
+            branches:
+              only:
+                - /^version/.*/
+                - /^feature/.*/
+                - /^bugfix/.*/
+      - build_and_install_staging:
+          context:
+            - salesforce
+          requires:
+            - approve_staging
+          filters:
+            branches:
+              only:
+                - /^version/.*/
+                - /^feature/.*/
+                - /^bugfix/.*/
+      - approve_production:
+          type: approval
+          requires:
+            - build_and_install_staging
+            - build_validated_package
+          filters:
+            branches:
+              only:
+                - /^version/.*/
+      - install_production:
+          context:
+            - salesforce
+          requires:
+            - approve_production
+          filters:
+            branches:
+              only:
+                - /^version/.*/

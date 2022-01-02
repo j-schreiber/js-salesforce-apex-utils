@@ -1,0 +1,24 @@
+{
+  "name": "your-package-name",
+  "version": "1.0.0",
+  "description": "Your package description",
+  "main": "index.js",
+  "scripts": {
+    "prettier:format": "./node_modules/.bin/prettier --write '**/*'",
+    "prettier:format:apex": "./node_modules/.bin/prettier --write '**/*.{trigger,cls,apex}'",
+    "prettier:format:json": "./node_modules/.bin/prettier --write '**/*.{json,yaml,yml}'",
+    "prettier:format:visualforce": "./node_modules/.bin/prettier --write '**/*.{cmp,page,component}'",
+    "prettier:format:lwc": "./node_modules/.bin/prettier --write '**/lwc/**/*.{html,js}'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/..."
+  },
+  "author": "Jannis Schreiber",
+  "devDependencies": {
+    "@salesforce/sfdx-lwc-jest": "^1.1.0",
+    "jest-junit": "^13.0.0",
+    "prettier": "^2.4.1",
+    "prettier-plugin-apex": "^1.10.0"
+  }
+}

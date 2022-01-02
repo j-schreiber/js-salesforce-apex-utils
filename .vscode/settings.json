@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "salesforcedx-vscode-apex.enable-semantic-errors": false,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": true,
+  "files.insertFinalNewline": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
