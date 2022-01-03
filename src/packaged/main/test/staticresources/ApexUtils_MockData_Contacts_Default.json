@@ -1,0 +1,22 @@
+[
+  {
+    "attributes": {
+      "type": "Contact",
+      "url": "/services/data/v53.0/sobjects/Contact/0037a00001YwpNoAAJ"
+    },
+    "Id": "0037a00001YwpNoAAJ",
+    "FirstName": "William",
+    "LastName": "Adama",
+    "Email": "w.adama@battlestar-galactica.com"
+  },
+  {
+    "attributes": {
+      "type": "Contact",
+      "url": "/services/data/v53.0/sobjects/Contact/0037a00001YwpNpAAJ"
+    },
+    "Id": "0037a00001YwpNpAAJ",
+    "FirstName": "Laura",
+    "LastName": "Roslin",
+    "Email": "l.roslin@battlestar-galactica.com"
+  }
+]

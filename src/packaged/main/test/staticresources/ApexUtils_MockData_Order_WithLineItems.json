@@ -1,0 +1,53 @@
+{
+  "attributes": {
+    "type": "Order",
+    "url": "/services/data/v50.0/sobjects/Order/8011x00000Qsh5QAAR"
+  },
+  "Id": "8011x00000Qsh5QAAR",
+  "OrderNumber": "00000100",
+  "CurrencyIsoCode": "EUR",
+  "Status": "Draft",
+  "BillingAddress": null,
+  "ShippingStreet": "Seltsamstraße 0",
+  "ShippingCity": "Wunderland",
+  "ShippingPostalCode": "12345",
+  "ShippingCountry": "Germany",
+  "TotalAmount": 735.35,
+  "AccountId": "0011x00001AmnooAAB",
+  "BillToContactId": "0031x000011ACBKAA4",
+  "ShipToContactId": null,
+  "Pricebook2Id": "01s1x000001n8SCAAY",
+  "EffectiveDate": "2021-01-20",
+  "OrderItems": {
+    "totalSize": 2,
+    "done": true,
+    "records": [
+      {
+        "attributes": {
+          "type": "OrderItem",
+          "url": "/services/data/v50.0/sobjects/OrderItem/8021x000002a7npAAA"
+        },
+        "Id": "8021x000002a7npAAA",
+        "PricebookEntryId": "01u1x00000C52caAAB",
+        "UnitPrice": 234.45,
+        "Quantity": 1.0,
+        "TotalPrice": 234.45,
+        "ServiceDate": null,
+        "Product2Id": "01t1x00000BXHNdAAP"
+      },
+      {
+        "attributes": {
+          "type": "OrderItem",
+          "url": "/services/data/v50.0/sobjects/OrderItem/8021x000002a7nqAAB"
+        },
+        "Id": "8021x000002a7nqAAB",
+        "PricebookEntryId": "01u1x00000C52caAAB",
+        "UnitPrice": 250.45,
+        "Quantity": 2.0,
+        "TotalPrice": 500.9,
+        "ServiceDate": null,
+        "Product2Id": "01t1x00000BXHNdAAP"
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "attributes": {
+    "type": "Account",
+    "url": "/services/data/v50.0/sobjects/Account/0011X00000l1CdIQAU"
+  },
+  "Id": "0011X00000l1CdIQAU",
+  "Name": "Apex Utils Test Business Account",
+  "BillingStreet": "Allersberger Straße 8-10",
+  "BillingPostalCode": "90461",
+  "BillingCity": "Nürnberg",
+  "BillingStateCode": null,
+  "BillingCountryCode": "DE",
+  "BillingAddress": {
+    "city": "Nürnberg",
+    "country": "Germany",
+    "countryCode": "DE",
+    "geocodeAccuracy": null,
+    "latitude": null,
+    "longitude": null,
+    "postalCode": "90461",
+    "state": null,
+    "stateCode": null,
+    "street": "Allersberger Straße 8-10"
+  },
+  "ShippingStreet": "Allersberger Straße 8-10",
+  "ShippingPostalCode": "90461",
+  "ShippingCity": "Nürnberg",
+  "ShippingStateCode": null,
+  "ShippingCountryCode": "DE",
+  "ShippingAddress": {
+    "city": "Nürnberg",
+    "country": "Germany",
+    "countryCode": "DE",
+    "geocodeAccuracy": null,
+    "latitude": null,
+    "longitude": null,
+    "postalCode": "90461",
+    "state": null,
+    "stateCode": null,
+    "street": "Allersberger Straße 8-10"
+  }
+}

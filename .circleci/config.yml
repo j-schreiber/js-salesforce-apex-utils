@@ -32,7 +32,6 @@ jobs:
           name: Run Apex Tests (Scratch Org)
           command: |
             mkdir -p test-results/apex
-            export SFDX_IMPROVED_CODE_COVERAGE="true"
             set +e
             sfdx force:apex:test:run -w 10 -u CircleCi -r junit -d test-results/apex --codecoverage --detailedcoverage
             exitCode=$?
@@ -92,7 +91,6 @@ jobs:
           name: Run Apex Tests (Staging)
           command: |
             mkdir -p test-results/apex
-            export SFDX_IMPROVED_CODE_COVERAGE="true"
             set +e
             sfdx force:apex:test:run -w 10 -u $USERNAME_STAGING -r junit -d test-results/apex
             exitCode=$?
@@ -189,7 +187,6 @@ jobs:
           name: Run Apex Tests (Production)
           command: |
             mkdir -p test-results/apex
-            export SFDX_IMPROVED_CODE_COVERAGE="true"
             set +e
             sfdx force:apex:test:run -w 10 -u $USERNAME_PRODUCTION -r junit -d test-results/apex
             exitCode=$?

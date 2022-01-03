@@ -1,3 +1,0 @@
-@isTest
-public class TestFixtures {
-}
