@@ -1,4 +1,4 @@
-#!bin/bash
+#! /bin/bash
 set -e
 
 alias='JsApexUtils'
@@ -13,6 +13,7 @@ do
         d )             duration=${OPTARG};;
         f )             configFile=${OPTARG};;
         v )             devhubusername=${OPTARG};;
+        * )
     esac
 done
 
