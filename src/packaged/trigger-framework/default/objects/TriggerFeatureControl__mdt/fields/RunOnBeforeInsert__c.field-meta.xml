@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RunOnBeforeInsert__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Runs this handler in &quot;before insert&quot; context.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Runs the handler in &quot;before insert&quot; context.</inlineHelpText>
+    <label>Before Insert</label>
+    <type>Checkbox</type>
+</CustomField>

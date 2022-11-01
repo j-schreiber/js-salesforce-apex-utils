@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RunOnAfterUndelete__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Runs this handler in &quot;after undelete&quot; context.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Runs the handler in &quot;after undelete&quot; context.</inlineHelpText>
+    <label>After Undelete</label>
+    <type>Checkbox</type>
+</CustomField>

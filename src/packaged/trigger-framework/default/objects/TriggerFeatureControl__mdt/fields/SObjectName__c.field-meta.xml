@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SObjectName__c</fullName>
+    <description>The developer name of the SObject for this control. We do not use a Metadata Relationship for performance reasons (30 ms vs 600 ms loading times).</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Set the SObject where the handler is executed. The SObject must implement a trigger that calls the framework.</inlineHelpText>
+    <label>SObject Name</label>
+    <length>43</length>
+    <required>true</required>
+    <unique>false</unique>
+    <type>Text</type>
+</CustomField>

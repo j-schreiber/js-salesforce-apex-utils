@@ -7,6 +7,10 @@
     {
       "path": "src/packaged",
       "default": false
+    },
+    {
+      "path": "src/unpackaged",
+      "default": false
     }
   ],
   "namespace": "",

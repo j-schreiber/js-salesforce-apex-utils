@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Priority__c</fullName>
+    <defaultValue>100</defaultValue>
+    <description>The order of execution for this specific handler. Higher numbers are executed later in a transaction.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Higher priorities are executed later during a transaction. If two handlers have the same priority, their order of execution is random.</inlineHelpText>
+    <label>Priority</label>
+    <precision>5</precision>
+    <required>true</required>
+    <scale>0</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

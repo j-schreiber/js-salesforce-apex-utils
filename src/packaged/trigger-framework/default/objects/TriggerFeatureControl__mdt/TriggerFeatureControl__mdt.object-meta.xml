@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Registers a feature for execution in trigger contexts (before insert, after insert, etc). Only active controls are executed.</description>
+    <label>Trigger Feature Control</label>
+    <pluralLabel>Trigger Feature Controls</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
