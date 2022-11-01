@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Input_Parameter_Cannot_Be_Null</fullName>
+        <categories>general,dev-only</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception if input parameter is null</shortDescription>
+        <value>{0} cannot be null!</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Input_At_Index</fullName>
+        <categories>general,dev-only</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Template string to render invalid inputs</shortDescription>
+        <value>Invalid input at index {0}: {1}</value>
+    </labels>
+    <labels>
+        <fullName>Duplicated_Value_At_Index</fullName>
+        <categories>general,dev-only</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Template string for duplicate unique input</shortDescription>
+        <value>Duplicate value in property {0}: {1}</value>
+    </labels>
+    <labels>
+        <fullName>Field_Is_Required_But_Is_Null</fullName>
+        <categories>general,user-visible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Standard error message for sobject validation when required field is blank</shortDescription>
+        <value>Field value cannot be blank: {0}</value>
+    </labels>
+    <labels>
+        <fullName>Field_Error_Merge_Literal</fullName>
+        <categories>general,user-visible</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Merge literal to concatenate field names for errors in validation</shortDescription>
+        <value>on {0}</value>
+    </labels>
+    <labels>
+        <fullName>Duplicated_Identifier_At_Index</fullName>
+        <categories></categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Template string for duplicate unique processor</shortDescription>
+        <value>Duplicate identifier at index {0}: {1}</value>
+    </labels>
+    <labels>
+        <fullName>Called_A_Method_On_Stub_That_Has_Not_Been_Stubbed</fullName>
+        <categories>apex,error,testing,stub-framework</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception message if spy no spy was initialized</shortDescription>
+        <value>Called a method that has not been stubbed: {0}</value>
+    </labels>
+    <labels>
+        <fullName>Converter_Developer_Name_Does_Not_Exist</fullName>
+        <categories>apex</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception message, when invalid converter name is instantiated.</shortDescription>
+        <value>The converter developer name {0} does not exist.</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Name_Apex_Class_Not_Found</fullName>
+        <categories>apex</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Apex class does not exist and cannot be instantiated.</shortDescription>
+        <value>Invalid class name: The apex class {0} was not found.</value>
+    </labels>
+    <labels>
+        <fullName>Apex_Class_Does_Not_Implement_Interface</fullName>
+        <categories>apex</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Apex class does not implement the requested interface.</shortDescription>
+        <value>Invalid class name: The apex class {0} does not implement the {1} interface.</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Target_Fields_In_Mapping</fullName>
+        <categories>converter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Template for duplicate target fields in mapping</shortDescription>
+        <value>Duplicate target fields in mapping: {0}</value>
+    </labels>
+    <labels>
+        <fullName>Converter_Utility_Invalid_Field_Api_Name</fullName>
+        <categories>apex</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception for invalid field conversion mapping</shortDescription>
+        <value>The configured field mapping is invalid. The field {0} does not exist on sobject {1}.</value>
+    </labels>
+    <labels>
+        <fullName>Expected_At_Least_One_Call_For_Method_Spy</fullName>
+        <categories>apex,error,testing,stub-framework</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception message if spy was not called the expected number of times</shortDescription>
+        <value>Expected at least one call of {0}.</value>
+    </labels>
+    <labels>
+        <fullName>Expected_No_Calls_For_Method_Spy</fullName>
+        <categories>apex,error,testing,stub-framework</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception message if spy was called more than zero</shortDescription>
+        <value>Expected no calls of {0}. Got: {1}</value>
+    </labels>
+    <labels>
+        <fullName>Expected_Specific_Number_Of_Calls_For_Method_Spy</fullName>
+        <categories>apex,error,testing,stub-framework</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception message if spy was called more than zero</shortDescription>
+        <value>Expected {0} calls of {1}. Got: {2}</value>
+    </labels>
+    <labels>
+        <fullName>Last_Call_Of_Spy_Method_Was_Not_With_Expected_Param_Values</fullName>
+        <categories>apex,error,testing,stub-framework</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception message if spy was not called with expected parameters</shortDescription>
+        <value>Last call of spy method {0} was not with the expected parameter values. Expected: {1}. Got: {2}</value>
+    </labels>
+    <labels>
+        <fullName>Mapped_Fields_On_Source_Record_Not_Populated</fullName>
+        <categories>apex,error,testing,stub-framework</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message if strict converter is called with not populated fields</shortDescription>
+        <value>The converter requires the field(s) {0} on the source record. Missing: {1}</value>
+    </labels>
+    <labels>
+        <fullName>Record_Template_Developer_Name_Does_Not_Exist</fullName>
+        <categories>apex</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception message, when invalid record template name is instantiated.</shortDescription>
+        <value>The record template developer name {0} does not exist.</value>
+    </labels>
+    <labels>
+        <fullName>Record_Template_Invalid_SObject_Name_In_Setting</fullName>
+        <categories>apex</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception message, when CMD has invalid SObject name</shortDescription>
+        <value>Invalid SObject name in setting: {0}</value>
+    </labels>
+    <labels>
+        <fullName>Source_Record_SObject_Type_Does_Not_Match</fullName>
+        <categories>apex</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception message, when sobject type for target is invalid</shortDescription>
+        <value>The sobject type of the source record {0} must be identical to the conversion source type {1}</value>
+    </labels>
+    <labels>
+        <fullName>Source_Record_Validation_Failed</fullName>
+        <categories>apex,converter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception message, when validator is failing</shortDescription>
+        <value>Source record validation failed: {0}</value>
+    </labels>
+    <labels>
+        <fullName>Target_Record_SObject_Type_Does_Not_Match</fullName>
+        <categories>apex</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer exception message, when sobject type for target is invalid</shortDescription>
+        <value>The sobject type of the target record {0} must be identical to the conversion target type {1}</value>
+    </labels>
+    <labels>
+        <fullName>Cannot_Add_More_Than_One_Level_Of_Subselect</fullName>
+        <categories>query-builder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer tried to add more than one level of subselect to query builder</shortDescription>
+        <value>Cannot add more than one level of subselects to query builder. Is already subselect of {0}.</value>
+    </labels>
+    <labels>
+        <fullName>Is_Not_A_Valid_Field</fullName>
+        <categories>query-builder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer tried to access an invalid field</shortDescription>
+        <value>{0} is not a valid field on {1}.</value>
+    </labels>
+    <labels>
+        <fullName>Is_Not_A_Valid_Field_Set</fullName>
+        <categories>query-builder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer tried to access an invalid field set</shortDescription>
+        <value>{0} is not a valid field set on {1}.</value>
+    </labels>
+    <labels>
+        <fullName>Is_Not_A_Valid_Child_Relationship</fullName>
+        <categories>query-builder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer tried to access an invalid child relationship</shortDescription>
+        <value>{0} is not a valid child relationship on {1}.</value>
+    </labels>
+    <labels>
+        <fullName>Is_Not_A_Valid_Parent_Relationship</fullName>
+        <categories>query-builder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer tried to access an invalid parent relationship</shortDescription>
+        <value>{0} is not a valid parent relationship on {1}.</value>
+    </labels>
+    <labels>
+        <fullName>Polymorphic_Relationship_Not_Supported</fullName>
+        <categories>query-builder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer tried to access a polymorphic relationship</shortDescription>
+        <value>{0} is a polymorphic relationship and currently not supported!</value>
+    </labels>
+    <labels>
+        <fullName>Cannot_Set_Condition_On_Parent_Select_Builder</fullName>
+        <categories>query-builder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer tried to set a condition on a parent select builder</shortDescription>
+        <value>Cannot set filter condition on a parent select builder.</value>
+    </labels>
+    <labels>
+        <fullName>Apex_Rest_Parse_Error_Invalid_Schema</fullName>
+        <categories>apex-rest</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid schema or validation for apex rest request</shortDescription>
+        <value>Errors parsing payload for schema {0}</value>
+    </labels>
+    <labels>
+        <fullName>JSON_Deserialize_Unexpected_Error</fullName>
+        <categories>json-utils</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unexpected error when deserializing JSON</shortDescription>
+        <value>Error deserializing input to {0}: {1}</value>
+    </labels>
+    <labels>
+        <fullName>Apex_Rest_Parse_Error_Invalid_List_Schema</fullName>
+        <categories>apex-rest,json-utils</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid schema or validation for bulk request</shortDescription>
+        <value>Error for payload entry at index {0}: {1}</value>
+    </labels>
+    <labels>
+        <fullName>Apex_Rest_Parse_Error_Cannot_Parse_To_Type</fullName>
+        <categories>apex-rest,json-utils</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid schema template when cannot parse</shortDescription>
+        <value>Cannot deserialize input to: {1}</value>
+    </labels>
+    <labels>
+        <fullName>Apex_Rest_Close_Transaction_Null_Payload</fullName>
+        <categories>apex-rest</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cannot close transaction, when response payload is null</shortDescription>
+        <value>No payload was specified. Cannot close transaction.</value>
+    </labels>
+</CustomLabels>
