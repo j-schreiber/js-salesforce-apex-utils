@@ -36,6 +36,7 @@ $RECYCLE.BIN/
 # other untracked
 untracked/
 test-results/
+scripts/apex/**
 
 # sensitive data
 **/keys.env
