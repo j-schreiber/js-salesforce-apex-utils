@@ -55,6 +55,17 @@ public virtual class TestMethodSpy {
     }
 
     /**
+     * Assert that the method was called with a single argument.
+     *
+     * @param expectedCallArg
+     * @see TestMethodSpy.hasBeenCalledWithOnNth
+     * @exception `TestSpyException` Details about the failed assert.
+     */
+    public void hasBeenCalledWithOnLast(Object expectedCallArg) {
+        this.hasBeenCalledWithOnLast(new List<Object>{ expectedCallArg });
+    }
+
+    /**
      * Assert on the used parameter values of the last method call. Use this method if you want to verify that
      * the method was called with a specific set of parameter values. The method also checks that at least one call
      * was made.
@@ -143,9 +154,9 @@ public virtual class TestMethodSpy {
      *
      * @return  `List<Object>`
      */
-    public virtual List<Object> getFromLastCallParameters() {
+    public virtual List<Object> getParametersFromLastCall() {
         hasBeenCalled();
-        return getFromNthCallParameters(this.CallParameters.size() - 1);
+        return getParametersFromNthCall(this.CallParameters.size() - 1);
     }
 
     /**
@@ -154,7 +165,7 @@ public virtual class TestMethodSpy {
      * @param callIndex
      * @return  `List<Object>`
      */
-    public virtual List<Object> getFromNthCallParameters(Integer callIndex) {
+    public virtual List<Object> getParametersFromNthCall(Integer callIndex) {
         if (this.CallCounter < (callIndex + 1)) {
             throw new TestSpyException(
                 String.format(
