@@ -1,0 +1,8 @@
+{
+  "orgName": "Lietzau Consulting",
+  "edition": "Enterprise",
+  "features": ["StateAndCountryPicklist"],
+  "country": "DE",
+  "language": "en_US",
+  "settings": {}
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Swiss Franc</label>
+    <protected>false</protected>
+    <values>
+        <field>CurrencyCodePosition__c</field>
+        <value xsi:type="xsd:string">BEFORE</value>
+    </values>
+    <values>
+        <field>CurrencySymbolPosition__c</field>
+        <value xsi:type="xsd:string">BEFORE</value>
+    </values>
+    <values>
+        <field>CurrencySymbol__c</field>
+        <value xsi:type="xsd:string">₣</value>
+    </values>
+    <values>
+        <field>DecimalSeparator__c</field>
+        <value xsi:type="xsd:string">.</value>
+    </values>
+    <values>
+        <field>FormatLength__c</field>
+        <value xsi:type="xsd:string">ISO_FORMAT</value>
+    </values>
+    <values>
+        <field>NativeLocale__c</field>
+        <value xsi:type="xsd:string">de_CH</value>
+    </values>
+    <values>
+        <field>ThousandsSeparator__c</field>
+        <value xsi:type="xsd:string">’</value>
+    </values>
+</CustomMetadata>
