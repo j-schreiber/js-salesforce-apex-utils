@@ -32,6 +32,7 @@ workflows:
           jwtKey: SFDX_JWT_KEY
           consumerKey: SFDX_CONSUMER_KEY
           package: PACKAGE_ID
+          requireInstallationKey: false
           context:
             - salesforce-partner-org
           filters:
