@@ -13,5 +13,12 @@
         description="Currency Iso Code (EUR, USD, etc) to display the value as"
         assignTo="{!currencyInputCode}"
     />
+    <apex:attribute
+        name="style"
+        required="false"
+        type="String"
+        description="Override the default formatting style of the currency"
+        assignTo="{!styleOverride}"
+    />
     <apex:outputText value="{!formattedValue}" />
 </apex:component>

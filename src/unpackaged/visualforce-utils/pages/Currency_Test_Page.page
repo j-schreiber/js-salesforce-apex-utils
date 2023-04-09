@@ -21,6 +21,9 @@
         <c:currencyOutput value="1234.11" currencyIsoCode="EUR" />
     </p>
     <p>
+        <c:currencyOutput value="1234.11" currencyIsoCode="EUR" style="ISO_FORMAT" />
+    </p>
+    <p>
         <c:currencyOutput value="-1234.11" currencyIsoCode="EUR" />
     </p>
     <p>
