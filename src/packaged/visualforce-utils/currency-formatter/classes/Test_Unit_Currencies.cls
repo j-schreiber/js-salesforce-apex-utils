@@ -211,14 +211,44 @@ public class Test_Unit_Currencies {
     }
 
     @isTest
-    static void getNativeLocale_EUR_ReturnsEURNativeLocale() {
-        // Arrange
-        Currency__mdt eurConfig = Currency__mdt.getInstance('EUR');
+    static void newInstance_EUR_InitFromConfig() {
+        // Act
+        CurrencyTypeExtension cur = Currencies.get('EUR');
+        Currency__mdt config = Currency__mdt.getInstance('EUR');
+
         // Assert
-        System.Assert.areEqual(eurConfig.NativeLocale__c, Currencies.get('EUR').getNativeLocale(), 'native locale for EUR');
+        System.Assert.areEqual('EUR', cur.getIsoCode(), 'iso code');
+        System.Assert.areEqual(config.NativeLocale__c, cur.getNativeLocale(), 'native locale');
+        System.Assert.areEqual(config.Symbol__c, cur.getSymbol(), 'symbol');
+        System.Assert.areEqual(config.SymbolPosition__c, cur.getSymbolPosition(), 'symbol position');
+        System.Assert.areEqual(config.CodePosition__c, cur.getCodePosition(), 'code position');
+        CurrencyFormatLength expectedStyle = CurrencyFormatLength.valueOf(config.FormatLength__c);
+        System.Assert.areEqual(expectedStyle, cur.getFormattingStyle(), 'formatting style');
     }
 
     @isTest
-    static void newInstance_EUR_InitFromConfig() {
+    static void format_WithStyleOverride_RetainsOriginalStyle() {
+        // Arrange
+        CurrencyTypeExtension cur = Currencies.get('EUR');
+
+        // Act
+        String explicitFormatting = cur.format(100.00, CurrencyFormatLength.EXPLICIT);
+
+        // Assert
+        Currency__mdt config = Currency__mdt.getInstance('EUR');
+        CurrencyFormatLength expectedStyle = CurrencyFormatLength.valueOf(config.FormatLength__c);
+        System.Assert.areEqual(expectedStyle, cur.getFormattingStyle(), 'formatting style');
+    }
+
+    @isTest
+    static void setFormattingStyle_NewStyle_OverridesOriginalStyle() {
+        // Arrange
+        CurrencyTypeExtension cur = Currencies.get('EUR');
+
+        // Act
+        Currencies.get('EUR').setFormattingStyle(CurrencyFormatLength.EXPLICIT);
+
+        // Assert
+        System.Assert.areEqual(CurrencyFormatLength.EXPLICIT, cur.getFormattingStyle(), 'formatting style');
     }
 }

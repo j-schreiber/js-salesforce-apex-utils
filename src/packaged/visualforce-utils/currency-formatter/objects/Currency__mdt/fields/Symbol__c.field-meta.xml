@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CurrencySymbol__c</fullName>
+    <fullName>Symbol__c</fullName>
     <description>Currency symbol or abbreviation for the currency according to ISO 4217.</description>
     <inlineHelpText>Provide the symbol or abbreviation for the currency. This is shown in short and explicit format length.</inlineHelpText>
     <externalId>false</externalId>

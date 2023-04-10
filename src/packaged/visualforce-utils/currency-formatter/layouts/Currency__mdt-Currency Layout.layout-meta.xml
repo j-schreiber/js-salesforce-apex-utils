@@ -35,7 +35,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>CurrencySymbol__c</field>
+                <field>Symbol__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -58,11 +58,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>CurrencySymbolPosition__c</field>
+                <field>SymbolPosition__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>CurrencyCodePosition__c</field>
+                <field>CodePosition__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

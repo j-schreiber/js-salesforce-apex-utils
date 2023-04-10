@@ -3,15 +3,15 @@
     <label>Canadian Dollar</label>
     <protected>false</protected>
     <values>
-        <field>CurrencyCodePosition__c</field>
+        <field>CodePosition__c</field>
         <value xsi:type="xsd:string">AFTER</value>
     </values>
     <values>
-        <field>CurrencySymbolPosition__c</field>
+        <field>SymbolPosition__c</field>
         <value xsi:type="xsd:string">BEFORE</value>
     </values>
     <values>
-        <field>CurrencySymbol__c</field>
+        <field>Symbol__c</field>
         <value xsi:type="xsd:string">$</value>
     </values>
     <values>

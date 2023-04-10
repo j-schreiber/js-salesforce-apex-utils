@@ -21,8 +21,6 @@ public class CurrencyTypeExtension {
         this.setFormattingStyle(CurrencyFormatLength.valueOf(this.config.FormatLength__c));
     }
 
-    //              PUBLIC STATIC
-
     //                 PUBLIC
 
     public String format(Decimal value) {
@@ -32,6 +30,10 @@ public class CurrencyTypeExtension {
     public String format(Decimal value, CurrencyFormatLength formattingStyle) {
         Formatter f = this.makeFormatter(formattingStyle);
         return f.format(value);
+    }
+
+    public String getIsoCode() {
+        return this.config.DeveloperName;
     }
 
     public String getNativeLocale() {
@@ -45,15 +47,15 @@ public class CurrencyTypeExtension {
     }
 
     public String getSymbol() {
-        return this.config.CurrencySymbol__c;
+        return this.config.Symbol__c;
     }
 
     public String getSymbolPosition() {
-        return this.config.CurrencySymbolPosition__c;
+        return this.config.SymbolPosition__c;
     }
 
     public String getCodePosition() {
-        return this.config.CurrencyCodePosition__c;
+        return this.config.CodePosition__c;
     }
 
     public CurrencyFormatLength getFormattingStyle() {
@@ -75,10 +77,10 @@ public class CurrencyTypeExtension {
                 f = new ExplicitStyleFormatter();
             }
         }
-        f.symbolBeforeNumber = this.config.CurrencySymbolPosition__c == 'BEFORE';
-        f.codeBeforeNumber = this.config.CurrencyCodePosition__c == 'BEFORE';
+        f.symbolBeforeNumber = this.config.SymbolPosition__c == 'BEFORE';
+        f.codeBeforeNumber = this.config.CodePosition__c == 'BEFORE';
         f.isoCode = this.config.DeveloperName;
-        f.symbol = this.config.CurrencySymbol__c;
+        f.symbol = this.config.Symbol__c;
         f.decimalSeparator = this.config.DecimalSeparator__c;
         f.thousandSeparator = this.config.ThousandsSeparator__c;
         f.scale = this.currType.DecimalPlaces;
