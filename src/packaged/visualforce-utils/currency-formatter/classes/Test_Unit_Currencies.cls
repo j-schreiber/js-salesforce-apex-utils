@@ -1,10 +1,10 @@
 @isTest
-public class Test_Unit_CurrencyValue {
+public class Test_Unit_Currencies {
     @isTest
     static void format_UnconfiguredCurrencyIsoCode_ThrowsException() {
         // Assert
         try {
-            String output = CurrencyValue.format('ABC', 1234);
+            String output = Currencies.format('ABC', 1234);
             System.Assert.fail('Expected exception, but continued.');
         } catch (IllegalArgumentException iae) {
             String expectedMsg = String.format(System.Label.Invalid_Currency_Iso_Code_Unknown_Currency_Type, new List<Object>{ 'ABC' });
@@ -33,7 +33,11 @@ public class Test_Unit_CurrencyValue {
 
         // Assert
         for (Decimal inputValue : inputOutputs.keySet()) {
-            System.Assert.areEqual(inputOutputs.get(inputValue), CurrencyValue.format('EUR', inputValue), 'output matches expected');
+            System.Assert.areEqual(
+                inputOutputs.get(inputValue),
+                Currencies.format('EUR', inputValue),
+                'output matches for input: ' + inputValue
+            );
         }
     }
 
@@ -60,7 +64,7 @@ public class Test_Unit_CurrencyValue {
         for (Decimal inputValue : inputOutputs.keySet()) {
             System.Assert.areEqual(
                 inputOutputs.get(inputValue),
-                CurrencyValue.format('EUR', inputValue, CurrencyValue.FormatLength.ISO_FORMAT),
+                Currencies.format('EUR', inputValue, CurrencyFormatLength.ISO_CODE),
                 'output matches expected'
             );
         }
@@ -89,7 +93,7 @@ public class Test_Unit_CurrencyValue {
         for (Decimal inputValue : inputOutputs.keySet()) {
             System.Assert.areEqual(
                 inputOutputs.get(inputValue),
-                CurrencyValue.format('EUR', inputValue, CurrencyValue.FormatLength.SHORT_FORMAT),
+                Currencies.format('EUR', inputValue, CurrencyFormatLength.SYMBOL),
                 'output matches expected'
             );
         }
@@ -100,6 +104,9 @@ public class Test_Unit_CurrencyValue {
         // Arrange
         Map<Decimal, String> inputOutputs = new Map<Decimal, String>{
             -0.00 => 'EUR 0,00',
+            -0.504 => 'EUR -0,50',
+            -0.505 => 'EUR -0,51',
+            -0.506 => 'EUR -0,51',
             -0.99 => 'EUR -0,99',
             -0.99999 => 'EUR -1,00',
             -1.00 => 'EUR -1,00',
@@ -115,8 +122,8 @@ public class Test_Unit_CurrencyValue {
         for (Decimal inputValue : inputOutputs.keySet()) {
             System.Assert.areEqual(
                 inputOutputs.get(inputValue),
-                CurrencyValue.format('EUR', inputValue, CurrencyValue.FormatLength.ISO_FORMAT),
-                'output matches expected'
+                Currencies.format('EUR', inputValue, CurrencyFormatLength.ISO_CODE),
+                'output for input: ' + inputValue
             );
         }
     }
@@ -141,7 +148,7 @@ public class Test_Unit_CurrencyValue {
         for (Decimal inputValue : inputOutputs.keySet()) {
             System.Assert.areEqual(
                 inputOutputs.get(inputValue),
-                CurrencyValue.format('USD', inputValue, CurrencyValue.FormatLength.EXPLICIT_FORMAT),
+                Currencies.format('USD', inputValue, CurrencyFormatLength.EXPLICIT),
                 'output matches expected'
             );
         }
@@ -167,7 +174,7 @@ public class Test_Unit_CurrencyValue {
         for (Decimal inputValue : inputOutputs.keySet()) {
             System.Assert.areEqual(
                 inputOutputs.get(inputValue),
-                CurrencyValue.format('USD', inputValue, CurrencyValue.FormatLength.EXPLICIT_FORMAT),
+                Currencies.format('USD', inputValue, CurrencyFormatLength.EXPLICIT),
                 'output matches expected'
             );
         }
@@ -178,7 +185,7 @@ public class Test_Unit_CurrencyValue {
         // Assert
         System.Assert.areEqual(
             'CHF 100’000.01',
-            CurrencyValue.format('CHF', 100000.01, CurrencyValue.FormatLength.ISO_FORMAT),
+            Currencies.format('CHF', 100000.01, CurrencyFormatLength.ISO_CODE),
             'output matches expected'
         );
     }
@@ -197,9 +204,21 @@ public class Test_Unit_CurrencyValue {
         for (Decimal inputValue : inputOutputs.keySet()) {
             System.Assert.areEqual(
                 inputOutputs.get(inputValue),
-                CurrencyValue.format('IDR', inputValue, CurrencyValue.FormatLength.SHORT_FORMAT),
+                Currencies.format('IDR', inputValue, CurrencyFormatLength.SYMBOL),
                 'output matches expected'
             );
         }
+    }
+
+    @isTest
+    static void getNativeLocale_EUR_ReturnsEURNativeLocale() {
+        // Arrange
+        Currency__mdt eurConfig = Currency__mdt.getInstance('EUR');
+        // Assert
+        System.Assert.areEqual(eurConfig.NativeLocale__c, Currencies.get('EUR').getNativeLocale(), 'native locale for EUR');
+    }
+
+    @isTest
+    static void newInstance_EUR_InitFromConfig() {
     }
 }

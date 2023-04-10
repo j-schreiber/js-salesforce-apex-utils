@@ -1,84 +1,47 @@
-public class CurrencyValue {
+public class CurrencyTypeExtension {
     String isoCode;
     Currency__mdt config;
     CurrencyType currType;
-    Decimal value;
-    FormatLength formattingStyle;
+    CurrencyFormatLength formattingStyle;
     Formatter valueFormatter;
 
-    public enum FormatLength {
-        SHORT_FORMAT,
-        ISO_FORMAT,
-        EXPLICIT_FORMAT
-    }
-
-    public CurrencyValue(String isoCode, Decimal value) {
-        this.isoCode = isoCode;
-        this.currType = CurrencyTypeRepository.Values.get(isoCode);
+    public CurrencyTypeExtension(String isoCode, Currency__mdt cmd, CurrencyType ct) {
+        this.currType = ct;
         if (this.currType == null) {
             throw new IllegalArgumentException(
                 String.format(System.Label.Invalid_Currency_Iso_Code_Unknown_Currency_Type, new List<Object>{ isoCode })
             );
         }
-        this.config = Currency__mdt.getInstance(this.isoCode);
+        this.config = cmd;
         if (this.config == null) {
             throw new IllegalArgumentException(
                 String.format(System.Label.Invalid_Currency_Iso_Code_Unknown_Custom_Metadata, new List<Object>{ isoCode })
             );
         }
-        this.value = value.setScale(this.currType.DecimalPlaces, RoundingMode.HALF_UP);
-        this.setFormattingStyle(CurrencyValue.FormatLength.valueOf(this.config.FormatLength__c));
+        this.setFormattingStyle(CurrencyFormatLength.valueOf(this.config.FormatLength__c));
     }
 
-    //                 PUBLIC STATIC
+    //              PUBLIC STATIC
 
-    public static String format(String isoCode, Decimal value) {
-        return new CurrencyValue(isoCode, value).format();
+    //                 PUBLIC
+
+    public String format(Decimal value) {
+        return this.valueFormatter.format(value);
     }
 
-    public static String format(String isoCode, Decimal value, FormatLength formattingStyle) {
-        return new CurrencyValue(isoCode, value).setFormattingStyle(formattingStyle).format();
+    public String format(Decimal value, CurrencyFormatLength formattingStyle) {
+        Formatter f = this.makeFormatter(formattingStyle);
+        return f.format(value);
     }
 
-    //                    PUBLIC
-
-    public CurrencyValue setFormattingStyle(CurrencyValue.FormatLength formattingStyle) {
-        this.formattingStyle = formattingStyle;
-        switch on this.formattingStyle {
-            when SHORT_FORMAT {
-                this.valueFormatter = new ShortStyleFormatter();
-            }
-            when ISO_FORMAT {
-                this.valueFormatter = new IsoStyleFormatter();
-            }
-            when else {
-                this.valueFormatter = new ExplicitStyleFormatter();
-            }
-        }
-        this.valueFormatter.symbolBeforeNumber = this.config.CurrencySymbolPosition__c == 'BEFORE';
-        this.valueFormatter.codeBeforeNumber = this.config.CurrencyCodePosition__c == 'BEFORE';
-        this.valueFormatter.isoCode = this.isoCode;
-        this.valueFormatter.symbol = this.config.CurrencySymbol__c;
-        this.valueFormatter.decimalSeparator = this.config.DecimalSeparator__c;
-        this.valueFormatter.thousandSeparator = this.config.ThousandsSeparator__c;
-        this.valueFormatter.scale = this.currType.DecimalPlaces;
-        return this;
-    }
-
-    public String format() {
-        return this.valueFormatter.format(this.value);
-    }
-
-    public Decimal getAbsoluteValue() {
-        return this.value.abs();
-    }
-
-    public String getSign() {
-        return this.value >= 0 ? '' : '-';
-    }
-
-    public String getDefaultLocale() {
+    public String getNativeLocale() {
         return this.config.NativeLocale__c;
+    }
+
+    public CurrencyTypeExtension setFormattingStyle(CurrencyFormatLength formattingStyle) {
+        this.formattingStyle = formattingStyle;
+        this.valueFormatter = this.makeFormatter(formattingStyle);
+        return this;
     }
 
     public String getSymbol() {
@@ -93,11 +56,34 @@ public class CurrencyValue {
         return this.config.CurrencyCodePosition__c;
     }
 
-    public FormatLength getFormattingStyle() {
+    public CurrencyFormatLength getFormattingStyle() {
         return this.formattingStyle;
     }
 
     //                  PRIVATE ZONE
+
+    private Formatter makeFormatter(CurrencyFormatLength style) {
+        Formatter f;
+        switch on style {
+            when SYMBOL {
+                f = new ShortStyleFormatter();
+            }
+            when ISO_CODE {
+                f = new IsoStyleFormatter();
+            }
+            when else {
+                f = new ExplicitStyleFormatter();
+            }
+        }
+        f.symbolBeforeNumber = this.config.CurrencySymbolPosition__c == 'BEFORE';
+        f.codeBeforeNumber = this.config.CurrencyCodePosition__c == 'BEFORE';
+        f.isoCode = this.config.DeveloperName;
+        f.symbol = this.config.CurrencySymbol__c;
+        f.decimalSeparator = this.config.DecimalSeparator__c;
+        f.thousandSeparator = this.config.ThousandsSeparator__c;
+        f.scale = this.currType.DecimalPlaces;
+        return f;
+    }
 
     private abstract class Formatter {
         public Boolean symbolBeforeNumber;
@@ -111,13 +97,18 @@ public class CurrencyValue {
         public abstract String format(Decimal value);
 
         private String formatNumber(Decimal value) {
+            Decimal roundedValue = value.setScale(this.scale, System.RoundingMode.HALF_UP);
             if (this.scale > 0) {
                 return String.format(
                     '{0}{1}{2}',
-                    new List<Object>{ this.formatIntLiteral(value), this.decimalSeparator, this.formatPrecisionLiteral(value) }
+                    new List<Object>{
+                        this.formatIntLiteral(roundedValue),
+                        this.decimalSeparator,
+                        this.formatPrecisionLiteral(roundedValue)
+                    }
                 );
             } else {
-                return this.formatIntLiteral(value);
+                return this.formatIntLiteral(roundedValue);
             }
         }
 

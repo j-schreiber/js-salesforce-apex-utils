@@ -15,17 +15,17 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>SHORT_FORMAT</fullName>
+                <fullName>SYMBOL</fullName>
                 <default>true</default>
-                <label>Short</label>
+                <label>Symbol</label>
             </value>
             <value>
-                <fullName>ISO_FORMAT</fullName>
+                <fullName>ISO_CODE</fullName>
                 <default>false</default>
                 <label>ISO Code</label>
             </value>
             <value>
-                <fullName>EXPLICIT_FORMAT</fullName>
+                <fullName>EXPLICIT</fullName>
                 <default>false</default>
                 <label>Explicit</label>
             </value>

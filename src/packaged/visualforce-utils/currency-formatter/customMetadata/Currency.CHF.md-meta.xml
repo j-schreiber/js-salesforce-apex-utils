@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>FormatLength__c</field>
-        <value xsi:type="xsd:string">ISO_FORMAT</value>
+        <value xsi:type="xsd:string">ISO_CODE</value>
     </values>
     <values>
         <field>NativeLocale__c</field>
-        <value xsi:type="xsd:string">de_CH</value>
+        <value xsi:type="xsd:string">CH</value>
     </values>
     <values>
         <field>ThousandsSeparator__c</field>
