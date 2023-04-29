@@ -56,7 +56,7 @@ workflows:
           requires:
             - jsc-sfdx/scratch_org_test
           context:
-            - salesforce
+            - salesforce-partner-org
           filters:
             branches:
               only:
