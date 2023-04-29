@@ -4,7 +4,7 @@ set -e
 alias='JsApexUtils'
 duration=7
 configFile='config/default-scratch-def.json'
-devhubusername="PartnerBusinessOrg"
+devhubusername=''
 
 while getopts a:d:f:v: option
 do
