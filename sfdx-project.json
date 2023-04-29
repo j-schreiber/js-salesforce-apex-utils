@@ -6,7 +6,7 @@
     },
     {
       "path": "src/packaged",
-      "package": "JS Apex Utils",
+      "package": "Power Suite Utils",
       "definitionFile": "config/default-scratch-def.json",
       "versionNumber": "0.1.0.NEXT",
       "default": false,
@@ -17,10 +17,11 @@
       "default": false
     }
   ],
-  "namespace": "",
+  "namespace": "powersuite",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "56.0",
   "packageAliases": {
-    "JS Apex Utils": "0Ho6f000000TN1eCAG"
+    "JS Apex Utils": "0Ho6f000000TN1eCAG",
+    "Power Suite Utils": "0Ho6f000000TN1jCAG"
   }
 }
