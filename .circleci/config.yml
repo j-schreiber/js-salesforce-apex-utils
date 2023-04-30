@@ -13,9 +13,9 @@ parameters:
     type: string
     default: https://jsc.my.salesforce.com
   powerSuiteDevOrgUsername:
-    description: Username for Dev Integration Sandbox for Power Suite development
+    description: Username for Dev Integration Org for Power Suite development
     type: string
-    default: power-suite@lietzau-consulting.de
+    default: ps-enterprise-dev@lietzau-consulting.de
 
 workflows:
   package_build:
@@ -44,7 +44,7 @@ workflows:
               only:
                 - /^version/.*/
       - jsc-sfdx/beta_package_deploy:
-          name: "power_suite_sandbox_deploy"
+          name: "power_suite_enterprise_deploy"
           devhubUsername: << pipeline.parameters.devhubUsername >>
           devhubInstanceUrl: << pipeline.parameters.devhubInstanceUrl >>
           targetOrgUsername: << pipeline.parameters.powerSuiteDevOrgUsername >>
@@ -67,7 +67,7 @@ workflows:
       - approve_package_release:
           type: approval
           requires:
-            - power_suite_sandbox_deploy
+            - power_suite_enterprise_deploy
             - jsc-sfdx/build_release_candidate_version
           filters:
             branches:
