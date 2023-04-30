@@ -1,5 +1,5 @@
 {
-  "orgName": "Lietzau Consulting",
+  "orgName": "JSC - Power Suite Utils",
   "edition": "Enterprise",
   "features": ["StateAndCountryPicklist", "MultiCurrency", "PersonAccounts"],
   "country": "DE",
@@ -7,18 +7,6 @@
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
-    },
-    "pathAssistantSettings": {
-      "pathAssistantEnabled": true
-    },
-    "languageSettings": {
-      "enableTranslationWorkbench": true
-    },
-    "chatterSettings": {
-      "enableChatter": true
-    },
-    "quoteSettings": {
-      "enableQuote": true
     }
   }
 }
