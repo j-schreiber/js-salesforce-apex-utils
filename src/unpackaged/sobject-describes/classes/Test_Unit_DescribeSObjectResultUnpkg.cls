@@ -33,4 +33,13 @@ public class Test_Unit_DescribeSObjectResultUnpkg {
         // Assert
         System.Assert.areEqual(new List<Schema.SObjectField>{ Schema.Contact.TestField__c }, resolvedTokens, 'tokens for: TestField__c');
     }
+
+    @isTest
+    static void getCustomFields_ObjectWithCustomFields_ReturnsOnlyCustomFields() {
+        // Act
+        Map<String, Schema.SObjectField> fields = ExtendedSchema.describeSObject('Contact').getCustomFields();
+
+        // Arrange
+        System.Assert.areEqual(new Set<String>{ 'powersuite__TestField__c' }, fields.keySet(), 'fields in keyset');
+    }
 }

@@ -295,4 +295,18 @@ public class Test_E2E_AccountTrigger {
         System.Assert.areEqual('München', enabledAccount.ShippingCity, 'synced shipping city');
         System.Assert.areEqual('Nürnberg', disabledAccount.ShippingCity, 'original shipping city from fixture');
     }
+
+    @isTest
+    static void disableFeatures_ListOfFeatureNames_NoFeaturesExecuted() {
+        // ACT
+        Triggers.disableFeatures(new List<String>{ 'Account_Sync_Shipping_Address' });
+        Account a = ApexUtilsFixtures.Accounts.CreateDefaultAccount();
+        a.BillingCity = 'München';
+        insert a;
+
+        // ASSERT
+        a = [SELECT Id, BillingCity, ShippingCity FROM Account WHERE Id = :a.Id];
+        System.Assert.areEqual('München', a.BillingCity, 'billing city');
+        System.Assert.areEqual('Nürnberg', a.ShippingCity, 'shipping city synced');
+    }
 }
