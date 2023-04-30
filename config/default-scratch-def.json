@@ -1,7 +1,7 @@
 {
   "orgName": "JSC - Power Suite Utils",
   "edition": "Enterprise",
-  "features": ["StateAndCountryPicklist", "MultiCurrency", "PersonAccounts"],
+  "features": ["StateAndCountryPicklist", "MultiCurrency"],
   "country": "DE",
   "language": "en_US",
   "settings": {
