@@ -4,11 +4,9 @@
     <description>The default format length that is used when formatting this currency.</description>
     <inlineHelpText>Provide the default format mode that is used, when the currency is formatted. Short only prints the symbol, Medium prints ISO code and Explicit prints symbol and ISO code.</inlineHelpText>
     <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
     <label>Format Length</label>
     <required>true</required>
-    <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
-    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
