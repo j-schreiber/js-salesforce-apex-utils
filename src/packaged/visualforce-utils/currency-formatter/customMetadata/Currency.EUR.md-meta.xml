@@ -23,10 +23,6 @@
         <value xsi:type="xsd:string">SYMBOL</value>
     </values>
     <values>
-        <field>NativeLocale__c</field>
-        <value xsi:type="xsd:string">DE</value>
-    </values>
-    <values>
         <field>ThousandsSeparator__c</field>
         <value xsi:type="xsd:string">.</value>
     </values>

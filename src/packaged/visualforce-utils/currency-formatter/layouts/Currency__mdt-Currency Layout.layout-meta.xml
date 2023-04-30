@@ -68,10 +68,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>NativeLocale__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
                 <field>FormatLength__c</field>
             </layoutItems>
         </layoutColumns>

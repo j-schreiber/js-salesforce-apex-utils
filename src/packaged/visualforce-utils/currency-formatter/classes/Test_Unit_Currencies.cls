@@ -136,7 +136,6 @@ public class Test_Unit_Currencies {
 
         // Assert
         System.Assert.areEqual('EUR', cur.getIsoCode(), 'iso code');
-        System.Assert.areEqual(config.NativeLocale__c, cur.getNativeLocale(), 'native locale');
         System.Assert.areEqual(config.Symbol__c, cur.getSymbol(), 'symbol');
         System.Assert.areEqual(config.SymbolPosition__c, cur.getSymbolPosition(), 'symbol position');
         System.Assert.areEqual(config.CodePosition__c, cur.getCodePosition(), 'code position');

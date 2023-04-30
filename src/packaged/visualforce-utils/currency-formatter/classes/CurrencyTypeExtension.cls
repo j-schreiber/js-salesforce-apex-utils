@@ -36,10 +36,6 @@ public class CurrencyTypeExtension {
         return this.config.DeveloperName;
     }
 
-    public String getNativeLocale() {
-        return this.config.NativeLocale__c;
-    }
-
     public CurrencyTypeExtension setFormattingStyle(CurrencyFormatLength formattingStyle) {
         this.formattingStyle = formattingStyle;
         this.valueFormatter = this.makeFormatter(formattingStyle);
