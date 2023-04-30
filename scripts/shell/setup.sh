@@ -31,8 +31,8 @@ fi
 echo "sfdx force:source:push -u $alias"
 sfdx force:source:push -u "$alias"
 
-echo "sfdx force:data:tree:import -p data/plans/standard-plan.json -u $alias"
-sfdx force:data:tree:import -p data/plans/standard-plan.json -u "$alias"
+echo "sfdx data tree import -p data/plans/standard-plan.json -o $alias"
+sfdx data tree import -p data/plans/standard-plan.json -o "$alias"
 
-echo "sfdx force:org:open -u $alias"
-sfdx force:org:open -u "$alias"
+echo "sfdx org open -o $alias"
+sfdx org open -o "$alias"
