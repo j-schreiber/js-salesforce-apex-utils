@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NativeLocale__c</fullName>
+    <description>The native country where this currency is the legal currency. This locale is applied when formatting numbers in documents that use this currency.</description>
+    <inlineHelpText>Provide the default country locale for this currency (e.g. US, DE, FR). The locale is applied to format numbers on documents that use this currency.</inlineHelpText>
+    <externalId>false</externalId>
+    <label>Native Locale</label>
+    <length>2</length>
+    <required>true</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

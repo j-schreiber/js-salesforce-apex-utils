@@ -93,7 +93,7 @@ public class Triggers {
         if (executable == null) {
             throw ApexUtilsExceptions.makeNewInputCannotBeNull('executable');
         }
-        disabledExecutables.add(String.valueOf(executable));
+        disabledExecutables.add(executable.getName());
     }
 
     /**
@@ -132,7 +132,7 @@ public class Triggers {
         if (executable == null) {
             throw ApexUtilsExceptions.makeNewInputCannotBeNull('executable');
         }
-        disabledExecutables.remove(String.valueOf(executable));
+        disabledExecutables.remove(executable.getName());
     }
 
     /**

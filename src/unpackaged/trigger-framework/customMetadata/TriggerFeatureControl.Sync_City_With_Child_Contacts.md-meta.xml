@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Handler__c</field>
-        <value xsi:type="xsd:string">AccountSyncCityWithChildContacts</value>
+        <value xsi:type="xsd:string">powersuite.AccountSyncCityWithChildContacts</value>
     </values>
     <values>
         <field>IsActive__c</field>

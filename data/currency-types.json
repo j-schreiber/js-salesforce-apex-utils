@@ -3,7 +3,7 @@
     {
       "attributes": {
         "type": "CurrencyType",
-        "referenceId": "ref1"
+        "referenceId": "CHF"
       },
       "IsoCode": "CHF",
       "DecimalPlaces": 2,
@@ -14,11 +14,55 @@
     {
       "attributes": {
         "type": "CurrencyType",
-        "referenceId": "ref2"
+        "referenceId": "USD"
       },
       "IsoCode": "USD",
       "DecimalPlaces": 2,
-      "ConversionRate": 1.08,
+      "ConversionRate": 1.1,
+      "IsActive": true,
+      "IsCorporate": false
+    },
+    {
+      "attributes": {
+        "type": "CurrencyType",
+        "referenceId": "CAD"
+      },
+      "IsoCode": "CAD",
+      "DecimalPlaces": 2,
+      "ConversionRate": 1.47,
+      "IsActive": true,
+      "IsCorporate": false
+    },
+    {
+      "attributes": {
+        "type": "CurrencyType",
+        "referenceId": "JPY"
+      },
+      "IsoCode": "JPY",
+      "DecimalPlaces": 0,
+      "ConversionRate": 145,
+      "IsActive": true,
+      "IsCorporate": false
+    },
+    {
+      "attributes": {
+        "type": "CurrencyType",
+        "referenceId": "IDR"
+      },
+      "IsoCode": "IDR",
+      "DecimalPlaces": 0,
+      "ConversionRate": 16426,
+      "IsActive": true,
+      "IsCorporate": false
+    },
+    {
+      "attributes": {
+        "type": "CurrencyType",
+        "referenceId": "RUB"
+      },
+      "IsoCode": "RUB",
+      "DecimalPlaces": 2,
+      "ConversionRate": 89,
       "IsActive": true,
       "IsCorporate": false
     }

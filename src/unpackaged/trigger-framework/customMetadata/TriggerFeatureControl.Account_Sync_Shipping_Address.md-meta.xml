@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Handler__c</field>
-        <value xsi:type="xsd:string">AccountSyncShippingAddress</value>
+        <value xsi:type="xsd:string">powersuite.AccountSyncShippingAddress</value>
     </values>
     <values>
         <field>IsActive__c</field>

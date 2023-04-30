@@ -5,13 +5,17 @@ orbs:
 
 parameters:
   devhubUsername:
-    description: Production username for the DevHub org (production environment)
+    description: DevHub username for the DevHub org
     type: string
     default: business@lietzau-consulting.de
   devhubInstanceUrl:
-    description: Production instance URL
+    description: DevHub instance URL
     type: string
     default: https://jsc.my.salesforce.com
+  powerSuiteDevOrgUsername:
+    description: Username for Dev Integration Sandbox for Power Suite development
+    type: string
+    default: power-suite@lietzau-consulting.de
 
 workflows:
   package_build:
@@ -35,6 +39,36 @@ workflows:
           requireInstallationKey: false
           context:
             - salesforce-partner-org
+          filters:
+            branches:
+              only:
+                - /^version/.*/
+      - jsc-sfdx/beta_package_deploy:
+          name: "power_suite_sandbox_deploy"
+          devhubUsername: << pipeline.parameters.devhubUsername >>
+          devhubInstanceUrl: << pipeline.parameters.devhubInstanceUrl >>
+          targetOrgUsername: << pipeline.parameters.powerSuiteDevOrgUsername >>
+          devhubJwtKey: SFDX_JWT_KEY
+          targetOrgJwtKey: SFDX_JWT_KEY
+          devhubConsumerKey: SFDX_CONSUMER_KEY
+          targetOrgConsumerKey: SFDX_CONSUMER_KEY_DEV
+          package: PACKAGE_ID
+          requires:
+            - jsc-sfdx/scratch_org_test
+          context:
+            - salesforce-partner-org
+          filters:
+            branches:
+              only:
+                - /^version/.*/
+                - /^feature/.*/
+                - /^bugfix/.*/
+                - /^refactor/.*/
+      - approve_package_release:
+          type: approval
+          requires:
+            - power_suite_sandbox_deploy
+            - jsc-sfdx/build_release_candidate_version
           filters:
             branches:
               only:

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FormatLength__c</fullName>
+    <description>The default format length that is used when formatting this currency.</description>
+    <inlineHelpText>Provide the default format mode that is used, when the currency is formatted. Short only prints the symbol, Medium prints ISO code and Explicit prints symbol and ISO code.</inlineHelpText>
+    <externalId>false</externalId>
+    <label>Format Length</label>
+    <required>true</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>SYMBOL</fullName>
+                <default>true</default>
+                <label>Symbol</label>
+            </value>
+            <value>
+                <fullName>ISO_CODE</fullName>
+                <default>false</default>
+                <label>ISO Code</label>
+            </value>
+            <value>
+                <fullName>EXPLICIT</fullName>
+                <default>false</default>
+                <label>Explicit</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
