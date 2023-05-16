@@ -1,0 +1,20 @@
+<apex:page
+    standardStylesheets="false"
+    applyBodyTag="true"
+    applyHtmlTag="false"
+    showHeader="false"
+    renderAs="pdf"
+>
+    <p>
+        <c:documentLabel value="My Testing Label" />
+    </p>
+    <p>
+        <c:documentLabel value="My Testing Label" language="de_DE" />
+    </p>
+    <p>
+        <c:documentLabel value="My Testing Label" language="en_US" />
+    </p>
+    <p>
+        <c:documentLabel value="Untranslated Label" language="en_US" />
+    </p>
+</apex:page>

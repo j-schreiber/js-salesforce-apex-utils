@@ -1,0 +1,17 @@
+<apex:component controller="DocumentLabelController">
+    <apex:attribute
+        name="value"
+        required="true"
+        type="String"
+        description="Label value to translate. This value will be displayed, if no translation is found"
+        assignTo="{!inputValue}"
+    />
+    <apex:attribute
+        name="language"
+        required="false"
+        type="String"
+        description="Desired language"
+        assignTo="{!inputLanguage}"
+    />
+    <apex:outputText value="{!localizedValue}" />
+</apex:component>

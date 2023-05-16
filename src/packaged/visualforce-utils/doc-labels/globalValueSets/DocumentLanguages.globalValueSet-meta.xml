@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>de_DE</fullName>
+        <default>false</default>
+        <label>Deutsch (Deutschland)</label>
+    </customValue>
+    <customValue>
+        <fullName>en_US</fullName>
+        <default>true</default>
+        <label>English (USA)</label>
+    </customValue>
+    <description>Language codes or names to localise documents with custom labels and text components. Subscriber orgs can manage all available values.</description>
+    <masterLabel>Document Languages</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

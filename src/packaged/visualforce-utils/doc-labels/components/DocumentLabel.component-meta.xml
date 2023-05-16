@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexComponent xmlns="urn:metadata.tooling.soap.sforce.com">
+    <apiVersion>56.0</apiVersion>
+    <description>Safely renders a document label or its user overwritten translation</description>
+    <label>Document Label</label>
+</ApexComponent>
