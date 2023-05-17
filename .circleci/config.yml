@@ -12,10 +12,47 @@ parameters:
     description: DevHub instance URL
     type: string
     default: https://jsc.my.salesforce.com
-  powerSuiteDevOrgUsername:
-    description: Username for Dev Integration Org for Power Suite development
-    type: string
-    default: ps-enterprise-dev@lietzau-consulting.de
+
+jobs:
+  uat_beta_package_install:
+    description: >
+      Installs a beta package build on an integration scratch org for UAT
+    docker:
+      - image: cimg/openjdk:17.0-node
+    parameters:
+      setupScript:
+        type: string
+        default: scripts/shell/setup.sh
+      scratchOrgAlias:
+        type: string
+        default: UATScratchOrg
+    steps:
+      - checkout
+      - jsc-sfdx/install
+      - jsc-sfdx/auth:
+          consumerKey: SFDX_CONSUMER_KEY
+          instanceUrl: << pipeline.parameters.devhubInstanceUrl >>
+          jwtKey: SFDX_JWT_KEY
+          setDefault: true
+          username: << pipeline.parameters.devhubUsername >>
+      - run:
+          command: >
+            source << parameters.setupScript >> -a << parameters.scratchOrgAlias >> -d 7
+          name: "Run scratch org setup for: << parameters.scratchOrgAlias >>"
+      - run:
+          command: >
+            sf org open -r -o << parameters.scratchOrgAlias >>
+          name: "Generate login link for: << parameters.scratchOrgAlias >>"
+      - jsc-sfdx/package-build:
+          requireInstallationKey: false
+          package: PACKAGE_ID
+      - jsc-sfdx/package-install:
+          installLatestBuild: false
+          targetOrg: << parameters.scratchOrgAlias >>
+      - jsc-sfdx/run-tests:
+          targetOrg: << parameters.scratchOrgAlias >>
+      - store_test_results:
+          path: test-results
 
 workflows:
   package_build:
@@ -43,16 +80,7 @@ workflows:
             branches:
               only:
                 - /^version/.*/
-      - jsc-sfdx/beta_package_deploy:
-          name: "power_suite_enterprise_deploy"
-          devhubUsername: << pipeline.parameters.devhubUsername >>
-          devhubInstanceUrl: << pipeline.parameters.devhubInstanceUrl >>
-          targetOrgUsername: << pipeline.parameters.powerSuiteDevOrgUsername >>
-          devhubJwtKey: SFDX_JWT_KEY
-          targetOrgJwtKey: SFDX_JWT_KEY
-          devhubConsumerKey: SFDX_CONSUMER_KEY
-          targetOrgConsumerKey: SFDX_CONSUMER_KEY_DEV
-          package: PACKAGE_ID
+      - uat_beta_package_install:
           requires:
             - jsc-sfdx/scratch_org_test
           context:
@@ -61,15 +89,12 @@ workflows:
             branches:
               only:
                 - /^version/.*/
-                - /^feature/.*/
-                - /^bugfix/.*/
-                - /^refactor/.*/
       - approve_package_release:
           type: approval
           requires:
-            - power_suite_enterprise_deploy
+            - uat_beta_package_install
             - jsc-sfdx/build_release_candidate_version
           filters:
             branches:
               only:
-                - /^version/.*/
+                - /^master*/
