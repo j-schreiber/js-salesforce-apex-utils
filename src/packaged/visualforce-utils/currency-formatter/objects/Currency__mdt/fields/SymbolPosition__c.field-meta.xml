@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SymbolPosition__c</fullName>
+    <description>Position of the symbol when rendering short or explicit format</description>
     <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Position of the symbol when rendering short or explicit format. Symbols before a numeric value are shown without spaces (in compliance with ISO-4217).</inlineHelpText>
     <label>Currency Symbol Position</label>
     <required>true</required>
-    <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
-    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
