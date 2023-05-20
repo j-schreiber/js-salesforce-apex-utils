@@ -22,10 +22,10 @@ jobs:
     parameters:
       setupScript:
         type: string
-        default: scripts/shell/setup.sh
+        default: scripts/shell/setup-uat.sh
       scratchOrgAlias:
         type: string
-        default: UATScratchOrg
+        default: UatScratch
     steps:
       - checkout
       - jsc-sfdx/install
@@ -37,8 +37,8 @@ jobs:
           username: << pipeline.parameters.devhubUsername >>
       - run:
           command: >
-            source << parameters.setupScript >> -a << parameters.scratchOrgAlias >> -d 7
-          name: "Run scratch org setup for: << parameters.scratchOrgAlias >>"
+            source << parameters.setupScript >> -a << parameters.scratchOrgAlias >> -v << pipeline.parameters.devhubUsername >>
+          name: "Prepare Default UAT Scratch Org: << parameters.scratchOrgAlias >>"
       - run:
           command: >
             sf org open -r -o << parameters.scratchOrgAlias >>
