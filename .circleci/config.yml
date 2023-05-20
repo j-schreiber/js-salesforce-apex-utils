@@ -45,6 +45,7 @@ jobs:
           name: "Generate login link for: << parameters.scratchOrgAlias >>"
       - jsc-sfdx/package-install:
           installLatestBuild: true
+          devhubUsername: << pipeline.parameters.devhubUsername >>
           targetOrg: << parameters.scratchOrgAlias >>
       - jsc-sfdx/run-tests:
           targetOrg: << parameters.scratchOrgAlias >>
