@@ -50,10 +50,13 @@ jobs:
       - run:
           name: Run all tests in org
           command: |
+            set +e
             sf apex run test --target-org << parameters.scratchOrgAlias >> --wait 10 --test-level RunAllTestsInOrg --code-coverage --result-format junit --output-dir test-results/apex
+            exitCode=$?
             rm -f test-results/apex/test-result.xml
             rm -f test-results/apex/*.json
             rm -f test-results/apex/*.txt
+            exit $exitCode
       - store_test_results:
           path: test-results
   promote_latest_release_candidate:
