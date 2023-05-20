@@ -20,5 +20,5 @@ done
 echo "npm ci"
 npm ci
 
-echo "sf force org create -v $devhubusername -d $duration -f $configFile -a $alias -s"
-sf force org create -v "$devhubusername" -d "$duration" -f "$configFile" -a "$alias" -s
+echo "sf force org create -v $devhubusername -d $duration -f $configFile -a $alias -s --nonamespace"
+sf force org create -v "$devhubusername" -d "$duration" -f "$configFile" -a "$alias" -s --nonamespace
