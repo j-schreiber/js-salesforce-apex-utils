@@ -49,7 +49,7 @@ jobs:
           targetOrg: << parameters.scratchOrgAlias >>
       - run:
           name: Run all tests in org
-          command: >
+          command: |
             sf apex run test --target-org << parameters.scratchOrgAlias >> --wait 10 --test-level RunAllTestsInOrg --code-coverage --result-format junit --output-dir test-results/apex
             rm -f "$PARAM_OUTPUT_DIRECTORY"/test-result.xml
             rm -f "$PARAM_OUTPUT_DIRECTORY"/*.json
