@@ -43,11 +43,8 @@ jobs:
           command: >
             sf org open -r -o << parameters.scratchOrgAlias >>
           name: "Generate login link for: << parameters.scratchOrgAlias >>"
-      - jsc-sfdx/package-build:
-          requireInstallationKey: false
-          package: PACKAGE_ID
       - jsc-sfdx/package-install:
-          installLatestBuild: false
+          installLatestBuild: true
           targetOrg: << parameters.scratchOrgAlias >>
       - jsc-sfdx/run-tests:
           targetOrg: << parameters.scratchOrgAlias >>
@@ -99,6 +96,7 @@ workflows:
       - uat_beta_package_install:
           requires:
             - jsc-sfdx/scratch_org_test
+            - jsc-sfdx/build_release_candidate_version
           context:
             - salesforce-partner-org
           filters:
@@ -109,7 +107,6 @@ workflows:
           type: approval
           requires:
             - uat_beta_package_install
-            - jsc-sfdx/build_release_candidate_version
           filters:
             branches:
               only:
