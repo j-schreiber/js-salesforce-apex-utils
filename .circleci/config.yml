@@ -53,6 +53,22 @@ jobs:
           targetOrg: << parameters.scratchOrgAlias >>
       - store_test_results:
           path: test-results
+  promote_latest_release_candidate:
+    description: >
+      Promotes the latest package version that was created during the build_release_candidate_version job
+    docker:
+      - image: cimg/openjdk:17.0-node
+    steps:
+      - checkout
+      - jsc-sfdx/install
+      - jsc-sfdx/auth:
+          consumerKey: SFDX_CONSUMER_KEY
+          instanceUrl: << pipeline.parameters.devhubInstanceUrl >>
+          jwtKey: SFDX_JWT_KEY
+          setDefault: true
+          username: << pipeline.parameters.devhubUsername >>
+      - jsc-sfdx/package-promote:
+          devhubUsername: << pipeline.parameters.devhubUsername >>
 
 workflows:
   package_build:
@@ -97,4 +113,13 @@ workflows:
           filters:
             branches:
               only:
-                - /^master*/
+                - /^version*/
+      - promote_latest_release_candidate:
+          requires:
+            - approve_package_release
+          context:
+            - salesforce-partner-org
+          filters:
+            branches:
+              only:
+                - /^version*/
