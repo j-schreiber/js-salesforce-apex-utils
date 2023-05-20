@@ -113,7 +113,7 @@ workflows:
           filters:
             branches:
               only:
-                - /^version*/
+                - /^version/.*/
       - promote_latest_release_candidate:
           requires:
             - approve_package_release
@@ -122,4 +122,4 @@ workflows:
           filters:
             branches:
               only:
-                - /^version*/
+                - /^version/.*/
