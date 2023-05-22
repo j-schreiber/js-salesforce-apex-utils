@@ -22,10 +22,10 @@ jobs:
     parameters:
       setupScript:
         type: string
-        default: scripts/shell/setup.sh
+        default: scripts/shell/setup-uat.sh
       scratchOrgAlias:
         type: string
-        default: UATScratchOrg
+        default: UatScratch
     steps:
       - checkout
       - jsc-sfdx/install
@@ -37,22 +37,44 @@ jobs:
           username: << pipeline.parameters.devhubUsername >>
       - run:
           command: >
-            source << parameters.setupScript >> -a << parameters.scratchOrgAlias >> -d 7
-          name: "Run scratch org setup for: << parameters.scratchOrgAlias >>"
+            source << parameters.setupScript >> -a << parameters.scratchOrgAlias >> -v << pipeline.parameters.devhubUsername >>
+          name: "Prepare Default UAT Scratch Org: << parameters.scratchOrgAlias >>"
       - run:
           command: >
             sf org open -r -o << parameters.scratchOrgAlias >>
           name: "Generate login link for: << parameters.scratchOrgAlias >>"
-      - jsc-sfdx/package-build:
-          requireInstallationKey: false
-          package: PACKAGE_ID
       - jsc-sfdx/package-install:
-          installLatestBuild: false
+          installLatestBuild: true
+          devhubUsername: << pipeline.parameters.devhubUsername >>
           targetOrg: << parameters.scratchOrgAlias >>
-      - jsc-sfdx/run-tests:
-          targetOrg: << parameters.scratchOrgAlias >>
+      - run:
+          name: Run all tests in org
+          command: |
+            set +e
+            sf apex run test --target-org << parameters.scratchOrgAlias >> --wait 10 --test-level RunAllTestsInOrg --code-coverage --result-format junit --output-dir test-results/apex
+            exitCode=$?
+            rm -f test-results/apex/test-result.xml
+            rm -f test-results/apex/*.json
+            rm -f test-results/apex/*.txt
+            exit $exitCode
       - store_test_results:
           path: test-results
+  promote_latest_release_candidate:
+    description: >
+      Promotes the latest package version that was created during the build_release_candidate_version job
+    docker:
+      - image: cimg/openjdk:17.0-node
+    steps:
+      - checkout
+      - jsc-sfdx/install
+      - jsc-sfdx/auth:
+          consumerKey: SFDX_CONSUMER_KEY
+          instanceUrl: << pipeline.parameters.devhubInstanceUrl >>
+          jwtKey: SFDX_JWT_KEY
+          setDefault: true
+          username: << pipeline.parameters.devhubUsername >>
+      - jsc-sfdx/package-promote:
+          devhubUsername: << pipeline.parameters.devhubUsername >>
 
 workflows:
   package_build:
@@ -83,6 +105,7 @@ workflows:
       - uat_beta_package_install:
           requires:
             - jsc-sfdx/scratch_org_test
+            - jsc-sfdx/build_release_candidate_version
           context:
             - salesforce-partner-org
           filters:
@@ -93,8 +116,16 @@ workflows:
           type: approval
           requires:
             - uat_beta_package_install
-            - jsc-sfdx/build_release_candidate_version
           filters:
             branches:
               only:
-                - /^master*/
+                - /^version/.*/
+      - promote_latest_release_candidate:
+          requires:
+            - approve_package_release
+          context:
+            - salesforce-partner-org
+          filters:
+            branches:
+              only:
+                - /^version/.*/

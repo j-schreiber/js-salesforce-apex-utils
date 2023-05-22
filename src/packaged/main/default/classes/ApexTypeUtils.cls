@@ -46,7 +46,7 @@ public class ApexTypeUtils {
     public static String getOrgNamespacePrefix() {
         if (orgNamespacePrefix == null) {
             Organization org = [SELECT NamespacePrefix FROM Organization];
-            orgNamespacePrefix = org.NamespacePrefix;
+            orgNamespacePrefix = org.NamespacePrefix == null ? '' : org.NamespacePrefix;
         }
         return orgNamespacePrefix;
     }

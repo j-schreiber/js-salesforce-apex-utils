@@ -29,7 +29,14 @@ public class Test_Unit_ApexTypeUtils {
         // Assert
         System.Assert.areEqual(1, Limits.getQueries(), 'total queries executed');
         Organization org = [SELECT NamespacePrefix FROM Organization];
-        System.Assert.areEqual(org.NamespacePrefix, prefix, 'namespace prefix');
+        // org without namespace is null, but utils return empty string
+        if (String.isBlank(org.NamespacePrefix)) {
+            System.Assert.areEqual('', prefix, 'namespace prefix');
+            System.Assert.areEqual('', prefixCall2, 'namespace prefixCall2');
+        } else {
+            System.Assert.areEqual(org.NamespacePrefix, prefix, 'namespace prefix');
+            System.Assert.areEqual(org.NamespacePrefix, prefixCall2, 'namespace prefixCall2');
+        }
         Test.stopTest();
     }
 }
