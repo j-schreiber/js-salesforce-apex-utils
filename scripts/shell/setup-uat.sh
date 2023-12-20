@@ -20,5 +20,11 @@ done
 echo "npm ci"
 npm ci
 
-echo "sf force org create -v $devhubusername -d $duration -f $configFile -a $alias -s --nonamespace"
-sf force org create -v "$devhubusername" -d "$duration" -f "$configFile" -a "$alias" -s --nonamespace
+echo "Create scratch org without namespace ..."
+sf org create scratch \
+    -v "$devhubusername" \
+    --duration-days "$duration" \
+    --definition-file "$configFile" \
+    --alias "$alias" \
+    --set-default \
+    --no-namespace
