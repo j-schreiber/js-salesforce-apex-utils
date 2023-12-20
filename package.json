@@ -10,8 +10,6 @@
   },
   "author": "Jannis Schreiber",
   "devDependencies": {
-    "@salesforce/sfdx-lwc-jest": "^1.1.0",
-    "jest-junit": "^13.0.0",
     "prettier": "^2.4.1",
     "prettier-plugin-apex": "^1.10.0"
   }

@@ -21,18 +21,18 @@ echo "npm ci"
 npm ci
 
 if [ -z "$devhubusername" ]; then
-    echo "sf force org create -d $duration -f $configFile -a $alias -s"
-    sf force org create -d "$duration" -f "$configFile" -a "$alias" -s
+    echo "sf org create scratch -y $duration -f $configFile -a $alias -d --json" 
+    sf org create scratch -y $duration -f $configFile -a $alias -d --json
 else
-    echo "sf force org create -v $devhubusername -d $duration -f $configFile -a $alias -s"
-    sf force org create -v "$devhubusername" -d "$duration" -f "$configFile" -a "$alias" -s
+    echo "sf org create scratch -v $devhubusername -y $duration -f $configFile -a $alias -d --json"
+    sf org create scratch -v $devhubusername -y $duration -f $configFile -a $alias -d --json
 fi
 
-echo "sfdx force:source:push -u $alias"
-sfdx force:source:push -u "$alias"
+echo "sf project deploy start -o $alias"
+sf project deploy start -o "$alias"
 
-echo "sfdx data tree import -p data/plans/standard-plan.json -o $alias"
+echo "sf data tree import -p data/plans/standard-plan.json -o $alias"
 sf data tree import -p data/plans/standard-plan.json -o "$alias"
 
-echo "sfdx org open -o $alias"
+echo "sf org open -o $alias"
 sf org open -o "$alias"
