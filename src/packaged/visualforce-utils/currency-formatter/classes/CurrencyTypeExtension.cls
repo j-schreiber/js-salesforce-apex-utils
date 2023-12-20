@@ -1,3 +1,9 @@
+/**
+ * Represents a currency like `USD` or `EUR` and provides various methods
+ * to format decimals with that currency.
+ *
+ * @group Visualforce Utilities
+ */
 public class CurrencyTypeExtension {
     String isoCode;
     Currency__mdt config;
@@ -5,6 +11,9 @@ public class CurrencyTypeExtension {
     CurrencyFormatLength formattingStyle;
     Formatter valueFormatter;
 
+    /**
+     * Do not construct directly. Use the factory method in `Currencies`.
+     */
     public CurrencyTypeExtension(String isoCode, Currency__mdt cmd, CurrencyType ct) {
         this.currType = ct;
         if (this.currType == null) {
@@ -23,19 +32,43 @@ public class CurrencyTypeExtension {
 
     //                 PUBLIC
 
+    /**
+     * Formats the input with the default formatting style from config.
+     *
+     * @param value
+     * @return  `String`
+     */
     public String format(Decimal value) {
         return this.valueFormatter.format(value);
     }
 
+    /**
+     * Formats the input with a custom formatting style.
+     *
+     * @param value
+     * @param formattingStyle
+     * @return  `String`
+     */
     public String format(Decimal value, CurrencyFormatLength formattingStyle) {
         Formatter f = this.makeFormatter(formattingStyle);
         return f.format(value);
     }
 
+    /**
+     * Returns the currency Iso Code.
+     *
+     * @return  `String`
+     */
     public String getIsoCode() {
         return this.config.DeveloperName;
     }
 
+    /**
+     * Sets the formatting style for all future calls to `format`.
+     *
+     * @param formattingStyle
+     * @return  `CurrencyTypeExtension`
+     */
     public CurrencyTypeExtension setFormattingStyle(CurrencyFormatLength formattingStyle) {
         this.formattingStyle = formattingStyle;
         this.valueFormatter = this.makeFormatter(formattingStyle);
