@@ -1,0 +1,24 @@
+<apex:component controller="CurrencyOutputController">
+    <apex:attribute
+        name="value"
+        required="true"
+        type="Decimal"
+        description="The numeric value of the currency"
+        assignTo="{!numericInputValue}"
+    />
+    <apex:attribute
+        name="currencyIsoCode"
+        required="true"
+        type="String"
+        description="Currency Iso Code (EUR, USD, etc) to display the value as"
+        assignTo="{!currencyInputCode}"
+    />
+    <apex:attribute
+        name="style"
+        required="false"
+        type="String"
+        description="Override the default formatting style of the currency"
+        assignTo="{!styleOverride}"
+    />
+    <apex:outputText value="{!formattedValue}" />
+</apex:component>

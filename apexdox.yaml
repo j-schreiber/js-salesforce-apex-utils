@@ -1,0 +1,34 @@
+engine:
+  targetDirectory: "${workspaceFolder}/docs"
+
+  source:
+    - path: "${workspaceFolder}/src/packaged/main/default/classes"
+    - path: "${workspaceFolder}/src/packaged/stub-provider/default/classes"
+    - path: "${workspaceFolder}/src/packaged/trigger-framework/default/classes"
+    - path: "${workspaceFolder}/src/packaged/validation/default/classes"
+    - path: "${workspaceFolder}/src/packaged/visualforce-utils"
+
+  title: "JS Apex Utils Documentation"
+
+  scope:
+    - global
+    - public
+    - webService
+    - testMethod
+
+  excludes:
+    - "*_Test.cls"
+    - "Test_*"
+    - "*Stub.cls"
+    - "*Mock.cls"
+    - "ApexUtilsMockFactory.cls"
+    - "*Exception.cls"
+    - "*Constants.cls"
+    - "*Fixtures.cls"
+
+  cleanDir: true
+
+  port: 8082
+
+docblock:
+  spacious: true

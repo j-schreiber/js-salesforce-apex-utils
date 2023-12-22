@@ -272,4 +272,21 @@
         <shortDescription>Cannot close transaction, when response payload is null</shortDescription>
         <value>No payload was specified. Cannot close transaction.</value>
     </labels>
+    <!-- Currency Formatter -->
+    <labels>
+        <fullName>Invalid_Currency_Iso_Code_Unknown_Currency_Type</fullName>
+        <categories>currency-formatter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Currency ISO code is an unknown currency type in org</shortDescription>
+        <value>Invalid currency ISO Code: {0}. Configure the CurrencyType before using it.</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Currency_Iso_Code_Unknown_Custom_Metadata</fullName>
+        <categories>currency-formatter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Currency ISO code is an unknown Currency__mdt in org</shortDescription>
+        <value>Invalid currency ISO Code: {0}. Configure the Currency__mdt before using it.</value>
+    </labels>
 </CustomLabels>

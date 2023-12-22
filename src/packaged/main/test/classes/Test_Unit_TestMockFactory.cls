@@ -393,7 +393,8 @@ public class Test_Unit_TestMockFactory {
     static void createSObjectMock_SetRecordTypeIdInInput_ThrowsException() {
         // ARRANGE
         Map<String, Schema.RecordTypeInfo> accountRecordTypes = Account.getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName();
-        if (accountRecordTypes.size() < 1) {
+        // abort test, if PersonAccounts are not enabled
+        if (!accountRecordTypes.containsKey('PersonAccount')) {
             return;
         }
 
@@ -417,7 +418,8 @@ public class Test_Unit_TestMockFactory {
     static void createSObjectMock_SetRecordTypeParentMockInInput_ThrowsException() {
         // ARRANGE
         Map<String, Schema.RecordTypeInfo> accountRecordTypes = Account.getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName();
-        if (accountRecordTypes.size() < 1) {
+        // abort test, if PersonAccounts are not enabled
+        if (!accountRecordTypes.containsKey('PersonAccount')) {
             return;
         }
 
@@ -440,19 +442,23 @@ public class Test_Unit_TestMockFactory {
     static void createSObjectMock_RecordTypeDeveloperName_TranslatesToId() {
         // ARRANGE
         Map<String, Schema.RecordTypeInfo> accountRecordTypes = Account.getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName();
-        if (accountRecordTypes.size() < 1) {
+        // abort test, if PersonAccounts are not enabled
+        if (!accountRecordTypes.containsKey('PersonAccount')) {
             return;
         }
 
         // ACT
         Account mockAccount = (Account) TestMockFactory.createSObjectMock(
             Account.SObjectType,
-            new Map<String, Object>{ 'LastName' => 'Tester', 'RecordTypeId' => accountRecordTypes.get('PersonAccount').getDeveloperName() }
+            new Map<String, Object>{
+                'AccountNumber' => '1234',
+                'RecordTypeId' => accountRecordTypes.get('PersonAccount').getDeveloperName()
+            }
         );
 
         // ASSERT
-        System.assertEquals(accountRecordTypes.get('PersonAccount').getRecordTypeId(), mockAccount.RecordTypeId, 'record type id');
-        System.assertEquals('Tester', mockAccount.LastName, 'record type id');
+        System.assertEquals(accountRecordTypes.get('PersonAccount').getRecordTypeId(), mockAccount.get('RecordTypeId'), 'record type id');
+        System.assertEquals('1234', mockAccount.AccountNumber, 'last name');
     }
 
     @isTest

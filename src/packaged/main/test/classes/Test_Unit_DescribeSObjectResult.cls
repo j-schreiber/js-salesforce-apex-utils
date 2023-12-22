@@ -124,30 +124,6 @@ public class Test_Unit_DescribeSObjectResult {
     }
 
     @isTest
-    static void getFieldSet_IsInvalidFieldSetName_ThrowsIllegalArgumentException() {
-        // ARRANGE
-        ExtendedDescribeSObjectResult describeResult = new ExtendedDescribeSObjectResult(Account.SObjectType);
-        // ASSERT
-        try {
-            describeResult.getFieldSet('Non_Existing_Field_Set');
-            System.Assert.fail('expected exception');
-        } catch (IllegalArgumentException qbe) {
-            System.Assert.isTrue(qbe.getMessage().contains('Non_Existing_Field_Set'), 'error contains input: ' + qbe.getMessage());
-            System.Assert.isTrue(qbe.getMessage().contains('Account'), 'error contains sobject name: ' + qbe.getMessage());
-        }
-    }
-
-    @isTest
-    static void getFieldSet_ValidFieldSetName_ReturnsFieldSet() {
-        // ARRANGE
-        ExtendedDescribeSObjectResult describeResult = new ExtendedDescribeSObjectResult(Contact.SObjectType);
-        // ACT
-        Schema.FieldSet fieldSet = describeResult.getFieldSet('Cache_Testing_Fields');
-        // ASSERT
-        System.Assert.areEqual('Cache_Testing_Fields', fieldSet.getName(), 'returns field set by name');
-    }
-
-    @isTest
     static void getParentRelationship_InvalidRelationshipName_ThrowsIllegalArgumentException() {
         // ARRANGE
         ExtendedDescribeSObjectResult describeResult = new ExtendedDescribeSObjectResult(Contact.SObjectType);
@@ -156,11 +132,21 @@ public class Test_Unit_DescribeSObjectResult {
             describeResult.getParentRelationship('InvalidParentRelationship');
             System.Assert.fail('expected exception');
         } catch (IllegalArgumentException qbe) {
-            System.Assert.areEqual(
-                true,
-                qbe.getMessage().contains('InvalidParentRelationship'),
-                'error contains input: ' + qbe.getMessage()
-            );
+            System.Assert.isTrue(qbe.getMessage().contains('InvalidParentRelationship'), 'error contains input: ' + qbe.getMessage());
+            System.Assert.isTrue(qbe.getMessage().contains('Contact'), 'error contains sobject name: ' + qbe.getMessage());
+        }
+    }
+
+    @isTest
+    static void getParentRelationship_NotARelationshipField_ThrowsIllegalArgumentException() {
+        // ARRANGE
+        ExtendedDescribeSObjectResult describeResult = new ExtendedDescribeSObjectResult(Contact.SObjectType);
+        // ASSERT
+        try {
+            describeResult.getParentRelationship('Email');
+            System.Assert.fail('expected exception');
+        } catch (IllegalArgumentException qbe) {
+            System.Assert.isTrue(qbe.getMessage().contains('Email'), 'error contains input: ' + qbe.getMessage());
             System.Assert.isTrue(qbe.getMessage().contains('Contact'), 'error contains sobject name: ' + qbe.getMessage());
         }
     }
@@ -312,6 +298,17 @@ public class Test_Unit_DescribeSObjectResult {
             System.Assert.fail('Expected exception');
         } catch (IllegalArgumentException e) {
             System.Assert.isTrue(e.getMessage().contains('Contacts'), 'message contains Contacts' + e.getMessage());
+        }
+    }
+
+    @isTest
+    static void getCustomFields_StandardObject_ReturnsOnlyCustomFields() {
+        // Act
+        Map<String, Schema.SObjectField> fields = ExtendedSchema.describeSObject('Account').getCustomFields();
+
+        // Arrange
+        for (Schema.SObjectField fieldToken : fields.values()) {
+            System.Assert.isTrue(fieldToken.getDescribe().isCustom(), 'field is custom: ' + fieldToken);
         }
     }
 }

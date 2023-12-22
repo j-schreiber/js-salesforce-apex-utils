@@ -1,0 +1,56 @@
+<apex:page
+    standardStylesheets="false"
+    applyBodyTag="true"
+    applyHtmlTag="false"
+    showHeader="false"
+    renderAs="pdf"
+>
+    <p>
+        <c:currencyOutput value="0.11" currencyIsoCode="EUR" />
+    </p>
+    <p>
+        <c:currencyOutput value="12.99" currencyIsoCode="EUR" />
+    </p>
+    <p>
+        <c:currencyOutput value="12.9999" currencyIsoCode="EUR" />
+    </p>
+    <p>
+        <c:currencyOutput value="12.99" currencyIsoCode="EUR" />
+    </p>
+    <p>
+        <c:currencyOutput value="1234.11" currencyIsoCode="EUR" />
+    </p>
+    <p>
+        <c:currencyOutput value="1234.11" currencyIsoCode="EUR" style="ISO_CODE" />
+    </p>
+    <p>
+        <c:currencyOutput value="-1234.11" currencyIsoCode="EUR" />
+    </p>
+    <p>
+        <c:currencyOutput value="1234.11" currencyIsoCode="EUR" />
+    </p>
+    <p>
+       <c:currencyOutput value="1234.56" currencyIsoCode="EUR" />
+    </p>
+    <p>
+        <c:currencyOutput value="122234.11" currencyIsoCode="CAD" />
+    </p>
+    <p>
+        <c:currencyOutput value="122234.11" currencyIsoCode="USD" style="SYMBOL" />
+    </p>
+    <p>
+        <c:currencyOutput value="122234.11" currencyIsoCode="USD" />
+    </p>
+    <p>
+        <c:currencyOutput value="-122234.11" currencyIsoCode="USD" />
+    </p>
+    <p>
+        <c:currencyOutput value="122234" currencyIsoCode="USD" />
+    </p>
+    <p>
+        <c:currencyOutput value="1234.11" currencyIsoCode="CHF" />
+    </p>
+    <p>
+        <c:currencyOutput value="1234234234" currencyIsoCode="IDR" />
+    </p>
+</apex:page>

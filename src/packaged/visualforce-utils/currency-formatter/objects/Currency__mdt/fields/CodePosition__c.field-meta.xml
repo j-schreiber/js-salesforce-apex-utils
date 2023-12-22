@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CodePosition__c</fullName>
+    <description>Position of the currency ISO code when rendered in Apex or Visualforce</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Specifies where the ISO code is displayed. BEFORE the numeric value (USD 123.00) or AFTER it (123.00 USD)</inlineHelpText>
+    <label>Currency Code Position</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BEFORE</fullName>
+                <default>true</default>
+                <label>Before</label>
+            </value>
+            <value>
+                <fullName>AFTER</fullName>
+                <default>false</default>
+                <label>After</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

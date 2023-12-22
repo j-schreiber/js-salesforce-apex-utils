@@ -59,7 +59,6 @@ public class ApexUtilsFixtures {
                     BillingStreet = 'Allersberger Str. 8-10',
                     BillingPostalCode = '90461',
                     BillingCity = 'Nürnberg',
-                    BillingCountryCode = 'DE',
                     NumberOfEmployees = 100
                 )
             );
@@ -70,7 +69,6 @@ public class ApexUtilsFixtures {
                     BillingStreet = 'Bayerstraße 10',
                     BillingPostalCode = '80335',
                     BillingCity = 'München',
-                    BillingCountryCode = 'DE',
                     NumberOfEmployees = 100
                 )
             );
@@ -81,7 +79,6 @@ public class ApexUtilsFixtures {
                     BillingStreet = 'Viktoriastraße 7-5',
                     BillingPostalCode = '86150',
                     BillingCity = 'Augsburg',
-                    BillingCountryCode = 'DE',
                     NumberOfEmployees = 100
                 )
             );
@@ -93,17 +90,15 @@ public class ApexUtilsFixtures {
             a.BillingStreet = 'Allersberger Straße 8-10';
             a.BillingPostalCode = '90461';
             a.BillingCity = 'Nürnberg';
-            a.BillingStateCode = null;
             a.ShippingStreet = 'Allersberger Straße 8-10';
             a.ShippingPostalCode = '90461';
             a.ShippingCity = 'Nürnberg';
-            a.ShippingStateCode = null;
             a.NumberOfEmployees = 1;
             return a;
         }
 
         public Account createAccount(String accountName, String accountNumber) {
-            return new Account(Name = accountName, AccountNumber = accountNumber, BillingCountryCode = 'DE', ShippingCountryCode = 'DE');
+            return new Account(Name = accountName, AccountNumber = accountNumber);
         }
 
         public Contact createContact(Id accountId, String email, String lastName) {
