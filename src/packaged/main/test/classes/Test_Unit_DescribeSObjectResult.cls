@@ -311,4 +311,27 @@ public class Test_Unit_DescribeSObjectResult {
             System.Assert.isTrue(fieldToken.getDescribe().isCustom(), 'field is custom: ' + fieldToken);
         }
     }
+
+    @isTest
+    static void hasParentRelationship_InvalidRelationshipName_False() {
+        // Arrange
+        Map<String, Boolean> dataTests = new Map<String, Boolean>{
+            'AccountId' => false,
+            'ReportsToId' => false,
+            'LastName' => false,
+            'InvalidField__x' => false,
+            'Account' => true,
+            'ReportsTo' => true
+        };
+        ExtendedDescribeSObjectResult describeResult = new ExtendedDescribeSObjectResult(Contact.SObjectType);
+
+        // Assert
+        for (String inputFieldName : dataTests.keySet()) {
+            System.Assert.areEqual(
+                dataTests.get(inputFieldName),
+                describeResult.hasParentRelationship(inputFieldName),
+                'for input: ' + inputFieldName
+            );
+        }
+    }
 }
