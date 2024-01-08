@@ -22,7 +22,7 @@ jobs:
     parameters:
       setupScript:
         type: string
-        default: scripts/shell/setup-uat.sh
+        default: scripts/shell/uat-setup.sh
       scratchOrgAlias:
         type: string
         default: UatScratch

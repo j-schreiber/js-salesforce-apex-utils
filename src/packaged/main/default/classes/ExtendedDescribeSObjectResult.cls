@@ -11,6 +11,7 @@ public class ExtendedDescribeSObjectResult {
     private Map<String, Schema.ChildRelationship> childRelationships;
     Map<String, Schema.SObjectField> customFields;
     Map<String, Schema.SObjectField> editableFields;
+    private static final Set<String> readOnlySystemFields = new Set<String>{ 'id', 'createddate', 'lastmodifieddate' };
 
     public ExtendedDescribeSObjectResult(Schema.SObjectType sobjectToken) {
         this.sobjectToken = sobjectToken;
@@ -140,6 +141,17 @@ public class ExtendedDescribeSObjectResult {
     }
 
     /**
+     * Checks if sobject has the parent relationship (lookup). Returns true,
+     * if the relationship exists. Looks for relationship name (`MyLookup__r`)
+     * not the field name (`MyLookup__c`)
+     *
+     * @return  `Boolean`
+     */
+    public Boolean hasParentRelationship(String fieldName) {
+        return this.getParentRelationshipsAsMap().containsKey(fieldName.toLowerCase());
+    }
+
+    /**
      * Returns all fields that reference to a parent object (lookup fields) as map by their
      * field developer names.
      *
@@ -229,6 +241,25 @@ public class ExtendedDescribeSObjectResult {
             fieldList.addAll(parentDescribe.resolveFieldLiteral(fieldLiteral.substringAfter('.')));
         }
         return fieldList;
+    }
+
+    /**
+     * Evaluates if the field is a read-only system field. Does not
+     * respect user permissions and should return true for all fields
+     * that can be modified by system mode.
+     *
+     * @param fieldName
+     * @return  `Boolean`
+     */
+    public Boolean isSystemReadOnly(String fieldName) {
+        Schema.DescribeFieldResult fieldDescribe = this.getField(fieldName).getDescribe();
+        if (fieldDescribe.isCalculated() || fieldDescribe.isAutoNumber()) {
+            return true;
+        }
+        if (readOnlySystemFields.contains(fieldName.toLowerCase())) {
+            return true;
+        }
+        return false;
     }
 
     //                          PRIVATE ZONE

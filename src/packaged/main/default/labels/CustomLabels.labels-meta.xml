@@ -158,7 +158,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Developer exception message, when sobject type for target is invalid</shortDescription>
-        <value>The sobject type of the source record {0} must be identical to the conversion source type {1}</value>
+        <value>The sobject type of the primary record ({0}) must be identical to the type of the secondary record ({1})</value>
     </labels>
     <labels>
         <fullName>Source_Record_Validation_Failed</fullName>
