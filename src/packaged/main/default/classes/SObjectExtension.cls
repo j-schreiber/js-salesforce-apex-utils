@@ -122,6 +122,7 @@ public class SObjectExtension {
                 continue;
             }
             if (this.describeResult.hasField(fieldName) && !this.describeResult.isSystemReadOnly(fieldName)) {
+                this.parseFieldType(fieldName);
                 this.record.put(fieldName, secondary.get(fieldName));
             }
             if (this.describeResult.hasParentRelationship(fieldName)) {
@@ -144,5 +145,28 @@ public class SObjectExtension {
             output.add(input.toLowerCase());
         }
         return output;
+    }
+
+    private void parseFieldType(String fieldName) {
+        Schema.DescribeFieldResult fieldDescribe = this.describeResult.getField(fieldName).getDescribe();
+        if (this.fieldTypeNotSupported(fieldDescribe)) {
+            throw new IllegalArgumentException(
+                String.format(
+                    'Field type {0} for {1} not supported!',
+                    new List<Object>{ String.valueOf(fieldDescribe.getType()).toUpperCase(), fieldName }
+                )
+            );
+        }
+    }
+
+    private Boolean fieldTypeNotSupported(Schema.DescribeFieldResult fieldDescribe) {
+        switch on fieldDescribe.getType() {
+            when Address, MultiPicklist, Location, Id, EncryptedString, base64 {
+                return true;
+            }
+            when else {
+                return false;
+            }
+        }
     }
 }

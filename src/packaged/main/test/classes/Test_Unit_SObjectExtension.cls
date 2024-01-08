@@ -16,12 +16,29 @@ public class Test_Unit_SObjectExtension {
     @isTest
     static void mergeRecords_BasicFields_AllValuesMerged() {
         // Act
-        Account acc1 = new Account(Name = 'Test Name');
-        Account acc2 = new Account(Name = 'Second Test Name', AccountNumber = '123');
-        SObjectExtension.mergeRecords(acc1, acc2);
+        Opportunity oppty1 = new Opportunity();
+        Opportunity oppty2 = new Opportunity(
+            Name = 'Test Name',
+            Amount = 9999,
+            TotalOpportunityQuantity = 100,
+            CloseDate = Date.newInstance(2024, 1, 6),
+            IsPrivate = false
+        );
+        SObjectExtension.MergeOptions opts = new SObjectExtension.MergeOptions();
+        opts.onlyMergeNonEmptyFields = true;
+        SObjectExtension.mergeRecords(oppty1, oppty2, opts);
 
         // Assert
-        System.Assert.areEqual(new Account(Name = 'Second Test Name', AccountNumber = '123'), acc1, 'all fields merged');
+        System.Assert.areEqual(
+            new Set<String>{ 'Name', 'Amount', 'TotalOpportunityQuantity', 'CloseDate', 'IsPrivate' },
+            oppty1.getPopulatedFieldsAsMap().keySet(),
+            'populated fields on opp 1: ' + oppty1
+        );
+        System.Assert.areEqual('Test Name', oppty1.Name, 'Name');
+        System.Assert.areEqual(9999, oppty1.Amount, 'Amount');
+        System.Assert.areEqual(100, oppty1.TotalOpportunityQuantity, 'TotalOpportunityQuantity');
+        System.Assert.areEqual(false, oppty1.IsPrivate, 'IsPrivate');
+        System.Assert.areEqual(Date.newInstance(2024, 1, 6), oppty1.CloseDate, 'CloseDate');
     }
 
     @isTest
@@ -188,5 +205,31 @@ public class Test_Unit_SObjectExtension {
         System.Assert.areEqual(9999, oppty1.Amount, 'amount field is not merged');
         System.Assert.areEqual(1000, oppty1.TotalOpportunityQuantity, 'TotalOpportunityQuantity is not merged');
         System.Assert.areEqual(Date.newInstance(2024, 1, 6), oppty1.CloseDate, 'close date is not merged');
+    }
+
+    @isTest
+    static void mergeRecords_CompoundField_ThrowsException() {
+        // Act
+        Account acc1 = new Account(Name = 'Test Name');
+        Account acc2 = (Account) TestMockFactory.createSObjectMock(
+            Schema.Account.SObjectType,
+            new Map<String, Object>{
+                'BillingAddress' => new Map<String, Object>{
+                    'street' => 'Test Straße 1',
+                    'postalCode' => '86150',
+                    'city' => 'Augsburg',
+                    'countryCode' => 'DE'
+                }
+            }
+        );
+
+        // Assert
+        try {
+            SObjectExtension.mergeRecords(acc1, acc2);
+            System.Assert.fail('Expected exception, but suceeded');
+        } catch (IllegalArgumentException iae) {
+            System.Assert.isTrue(iae.getMessage().contains('ADDRESS'), 'message contains field type: ' + iae.getMessage());
+            System.Assert.isTrue(iae.getMessage().contains('BillingAddress'), 'message contains field name: ' + iae.getMessage());
+        }
     }
 }
