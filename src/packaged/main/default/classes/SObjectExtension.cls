@@ -126,9 +126,15 @@ public class SObjectExtension {
                 this.record.put(fieldName, secondary.get(fieldName));
             }
             if (this.describeResult.hasParentRelationship(fieldName)) {
-                SObject primaryParent = this.record.getSObject(fieldName);
+                SObject primaryParent = this.record.getPopulatedFieldsAsMap().containsKey(fieldName)
+                    ? this.record.getSObject(fieldName)
+                    : null;
                 SObject secondaryParent = secondary.getSObject(fieldName);
-                this.record.putSObject(fieldName, primaryParent == null ? secondaryParent : mergeRecords(primaryParent, secondaryParent));
+                if (primaryParent == null) {
+                    this.record.putSObject(fieldName, secondaryParent);
+                } else {
+                    mergeRecords(primaryParent, secondaryParent);
+                }
             }
         }
         return this.record;
