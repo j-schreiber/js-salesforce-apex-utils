@@ -2,6 +2,7 @@
 public class ApexUtilsFixtures {
     public static SetupObjectFixtures Setup = new SetupObjectFixtures();
     public static AccountFixtures Accounts = new AccountFixtures();
+    public static OrderFixtures Orders = new OrderFixtures();
 
     public class SetupObjectFixtures {
         public Group insertQueue(String queueName, String enabledSobject) {
@@ -109,6 +110,29 @@ public class ApexUtilsFixtures {
             Triggers.disableSObject(Schema.Account.SObjectType);
             insert accs;
             Triggers.enableSObject(Schema.Account.SObjectType);
+        }
+    }
+
+    public class OrderFixtures {
+        public Pricebook2 insertProductsWithStandardPrices() {
+            Pricebook2 standardPb = new Pricebook2(Id = Test.getStandardPricebookId(), IsActive = true);
+            update standardPb;
+            List<Product2> prods = this.insertDefaultProducts();
+            List<PricebookEntry> pbes = new List<PricebookEntry>();
+            for (Product2 p : prods) {
+                pbes.add(new PricebookEntry(Product2Id = p.Id, Pricebook2Id = standardPb.Id, UnitPrice = 1000));
+            }
+            insert pbes;
+            return standardPb;
+        }
+
+        public List<Product2> insertDefaultProducts() {
+            List<Product2> prods = new List<Product2>();
+            prods.add(new Product2(Name = 'Test Product 1', ProductCode = 'A-1', IsActive = true));
+            prods.add(new Product2(Name = 'Test Product 2', ProductCode = 'A-2', IsActive = true));
+            prods.add(new Product2(Name = 'Test Product 3', ProductCode = 'A-3', IsActive = true));
+            insert prods;
+            return prods;
         }
 
         private void insertOrdersWithoutTriggers(List<Order> ords) {

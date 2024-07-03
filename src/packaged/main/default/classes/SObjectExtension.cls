@@ -105,6 +105,9 @@ public class SObjectExtension {
      * @exception
      */
     public SObject mergeWith(SObject secondary, MergeOptions options) {
+        if (secondary == null) {
+            return this.record;
+        }
         if (this.record.getSObjectType() != secondary.getSObjectType()) {
             throw new IllegalArgumentException(
                 String.format(
@@ -134,6 +137,9 @@ public class SObjectExtension {
                     this.record.putSObject(fieldName, secondaryParent);
                 } else {
                     mergeRecords(primaryParent, secondaryParent);
+                }
+                if (secondaryParent == null) {
+                    this.record.putSObject(fieldName, null);
                 }
             }
         }
@@ -174,5 +180,15 @@ public class SObjectExtension {
                 return false;
             }
         }
+    }
+
+    private void parseForReadOnlyMasterDetail(String fieldName, SObject primaryParent, SObject secondaryParent) {
+        if (isNonReparentableMasterDetail(fieldName) && primaryParent.Id != secondaryParent.Id) {
+        }
+    }
+
+    private Boolean isNonReparentableMasterDetail(String fieldName) {
+        Schema.DescribeFieldResult fieldDescribe = this.describeResult.getField(fieldName).getDescribe();
+        return !fieldDescribe.isPermissionable() && !fieldDescribe.isNillable();
     }
 }
