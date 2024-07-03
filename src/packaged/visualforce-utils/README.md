@@ -23,7 +23,7 @@ The standard configuration implements the guidelines in the [Unicode CLDR](https
 
 ```java
 // format raw numbes with default configuration
-String formattedCurr = Currencies.format(1234.56, 'EUR');
+String formattedCurr = Currencies.format('EUR', 1234.56);
 
 // change the formatting style for EUR in this execution context
 CurrencyTypeExtension eurCurr = Currencies.get('EUR');
@@ -31,5 +31,5 @@ eurCurr.setFormattingStyle(CurrencyFormatLength.SYMBOL);
 String formattedCurr = eurCurr.format(1234.56);
 
 // temporarily format EUR with ISO style (1.234,56 EUR)
-String formattedCurr = Currencies.format(1234.56, 'EUR', CurrencyFormatLength.ISO_CODE);
+String formattedCurr = Currencies.format('EUR', 1234.56, CurrencyFormatLength.ISO_CODE);
 ```
