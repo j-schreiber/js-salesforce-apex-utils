@@ -7,20 +7,20 @@
 public class CurrencyTypeExtension {
     String isoCode;
     Currency__mdt config;
-    CurrencyType currType;
+    // CurrencyType currType;
     CurrencyFormatLength formattingStyle;
     Formatter valueFormatter;
 
     /**
      * Do not construct directly. Use the factory method in `Currencies`.
      */
-    public CurrencyTypeExtension(String isoCode, Currency__mdt cmd, CurrencyType ct) {
-        this.currType = ct;
-        if (this.currType == null) {
-            throw new IllegalArgumentException(
-                String.format(System.Label.Invalid_Currency_Iso_Code_Unknown_Currency_Type, new List<Object>{ isoCode })
-            );
-        }
+    public CurrencyTypeExtension(String isoCode, Currency__mdt cmd) {
+        // this.currType = ct;
+        // if (this.currType == null) {
+        //     throw new IllegalArgumentException(
+        //         String.format(System.Label.Invalid_Currency_Iso_Code_Unknown_Currency_Type, new List<Object>{ isoCode })
+        //     );
+        // }
         this.config = cmd;
         if (this.config == null) {
             throw new IllegalArgumentException(
@@ -112,7 +112,8 @@ public class CurrencyTypeExtension {
         f.symbol = this.config.Symbol__c;
         f.decimalSeparator = this.config.DecimalSeparator__c;
         f.thousandSeparator = this.config.ThousandsSeparator__c;
-        f.scale = this.currType.DecimalPlaces;
+        f.scale = 2;
+        // f.scale = this.currType.DecimalPlaces;
         return f;
     }
 
