@@ -80,11 +80,23 @@ workflows:
   package_build:
     jobs:
       - jsc-sfdx/scratch_org_test:
+          name: minimal_enterprise_scratch_def
           devhubUsername: << pipeline.parameters.devhubUsername >>
           devhubInstanceUrl: << pipeline.parameters.devhubInstanceUrl >>
           jwtKey: SFDX_JWT_KEY
           consumerKey: SFDX_CONSUMER_KEY
           setupScript: scripts/shell/setup.sh
+          runPrettier: true
+          runLwcTests: false
+          context:
+            - salesforce-partner-org
+      - jsc-sfdx/scratch_org_test:
+          name: optional_features_enterprise_scratch_def
+          devhubUsername: << pipeline.parameters.devhubUsername >>
+          devhubInstanceUrl: << pipeline.parameters.devhubInstanceUrl >>
+          jwtKey: SFDX_JWT_KEY
+          consumerKey: SFDX_CONSUMER_KEY
+          setupScript: scripts/shell/setup-multi-currency.sh
           runPrettier: true
           runLwcTests: false
           context:
@@ -104,7 +116,8 @@ workflows:
                 - /^version/.*/
       - uat_beta_package_install:
           requires:
-            - jsc-sfdx/scratch_org_test
+            - minimal_enterprise_scratch_def
+            - optional_features_enterprise_scratch_def
             - jsc-sfdx/build_release_candidate_version
           context:
             - salesforce-partner-org
