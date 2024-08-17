@@ -6,20 +6,8 @@
  * @see CurrencyTypeExtension
  */
 public class Currencies {
-    // public static Map<String, CurrencyType> currencyTypes {
-    //     get {
-    //         if (currencyTypes == null) {
-    //             currencyTypes = new Map<String, CurrencyType>();
-    //             for (CurrencyType ct : [SELECT Id, IsoCode, DecimalPlaces FROM CurrencyType]) {
-    //                 currencyTypes.put(ct.IsoCode, ct);
-    //             }
-    //         }
-    //         return currencyTypes;
-    //     }
-    //     set;
-    // }
-
     public static Map<String, CurrencyTypeExtension> currencyTypeExtensions = new Map<String, CurrencyTypeExtension>();
+    private static Map<String, Currency__mdt> mockCurrencyConfigs = new Map<String, Currency__mdt>();
 
     /**
      * Factory method to construct a currency extension. Use this if you want to customize
@@ -30,7 +18,7 @@ public class Currencies {
      */
     public static CurrencyTypeExtension get(String isoCode) {
         if (!currencyTypeExtensions.containsKey(isoCode)) {
-            currencyTypeExtensions.put(isoCode, new CurrencyTypeExtension(isoCode, Currency__mdt.getInstance(isoCode)));
+            currencyTypeExtensions.put(isoCode, new CurrencyTypeExtension(isoCode, getCurrencyConfiguration(isoCode)));
         }
         return currencyTypeExtensions.get(isoCode);
     }
@@ -58,5 +46,19 @@ public class Currencies {
      */
     public static String format(String isoCode, Decimal value, CurrencyFormatLength formattingStyle) {
         return get(isoCode).format(value, formattingStyle);
+    }
+
+    //                  PRIVATE ZONE
+
+    private static Currency__mdt getCurrencyConfiguration(String isoCode) {
+        if (mockCurrencyConfigs.containsKey(isoCode)) {
+            return mockCurrencyConfigs.get(isoCode);
+        }
+        return Currency__mdt.getInstance(isoCode);
+    }
+
+    @testVisible
+    private static void setMockCurrencyConfiguration(Currency__mdt mockConfig) {
+        mockCurrencyConfigs.put(mockConfig.DeveloperName, mockConfig);
     }
 }
