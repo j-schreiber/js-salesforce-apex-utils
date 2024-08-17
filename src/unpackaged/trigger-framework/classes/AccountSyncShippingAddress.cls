@@ -4,8 +4,6 @@ public class AccountSyncShippingAddress implements TriggerExecutable {
             a.ShippingStreet = a.BillingStreet;
             a.ShippingPostalCode = a.BillingPostalCode;
             a.ShippingCity = a.BillingCity;
-            a.ShippingCountryCode = a.BillingCountryCode;
-            a.ShippingStateCode = a.BillingStateCode;
         }
     }
 }
