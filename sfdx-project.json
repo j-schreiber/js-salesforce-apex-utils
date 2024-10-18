@@ -20,7 +20,7 @@
   ],
   "namespace": "powersuite",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "56.0",
+  "sourceApiVersion": "61.0",
   "packageAliases": {
     "JS Apex Utils": "0Ho6f000000TN1eCAG",
     "Power Suite Utils": "0Ho6f000000TN1jCAG"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApexComponent xmlns="urn:metadata.tooling.soap.sforce.com">
-    <apiVersion>56.0</apiVersion>
+    <apiVersion>61.0</apiVersion>
     <description>Renders a numeric value as a currency and applies local formatting. Values are not converted and display as the specified currency.</description>
     <label>Currency Output Value</label>
 </ApexComponent>
