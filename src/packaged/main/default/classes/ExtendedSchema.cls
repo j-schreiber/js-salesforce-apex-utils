@@ -4,10 +4,10 @@
  * @group SObject Utilities
  * @see ExtendedDescribeSObjectResult
  */
-public class ExtendedSchema {
+global class ExtendedSchema {
     static Map<String, ExtendedDescribeSObjectResult> describeResults = new Map<String, ExtendedDescribeSObjectResult>();
 
-    public static ExtendedDescribeSObjectResult describeSObject(String sobjectName) {
+    global static ExtendedDescribeSObjectResult describeSObject(String sobjectName) {
         String key = sobjectName.toLowerCase();
         if (!describeResults.containsKey(key)) {
             describeResults.put(key, new ExtendedDescribeSObjectResult(sobjectName));
@@ -15,7 +15,7 @@ public class ExtendedSchema {
         return describeResults.get(key);
     }
 
-    public static Map<String, ExtendedDescribeSObjectResult> describeSObjects(Set<String> sobjectNames) {
+    global static Map<String, ExtendedDescribeSObjectResult> describeSObjects(Set<String> sobjectNames) {
         List<String> undescribedSobjects = new List<String>();
         for (String sobjectName : sobjectNames) {
             if (!describeResults.containsKey(sobjectName.toLowerCase())) {
@@ -35,7 +35,7 @@ public class ExtendedSchema {
         return resultMap;
     }
 
-    public static ExtendedDescribeSObjectResult describeSObject(Schema.SObjectType sObjectType) {
+    global static ExtendedDescribeSObjectResult describeSObject(Schema.SObjectType sObjectType) {
         String key = String.valueOf(sObjectType).toLowerCase();
         if (!describeResults.containsKey(key)) {
             describeResults.put(key, new ExtendedDescribeSObjectResult(sObjectType));
@@ -43,7 +43,7 @@ public class ExtendedSchema {
         return describeResults.get(key);
     }
 
-    public static ExtendedDescribeSObjectResult describeSObject(Schema.DescribeSObjectResult describeResult) {
+    global static ExtendedDescribeSObjectResult describeSObject(Schema.DescribeSObjectResult describeResult) {
         String key = String.valueOf(describeResult.getSobjectType()).toLowerCase();
         if (!describeResults.containsKey(key)) {
             describeResults.put(key, new ExtendedDescribeSObjectResult(describeResult));
