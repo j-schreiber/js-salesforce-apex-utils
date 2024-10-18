@@ -1,9 +1,9 @@
 #! /bin/bash
 set -e
 
-alias='JsApexUtils'
+alias='JsApexUtilsCurrencies'
 duration=7
-configFile='config/minimal-enterprise-def.json'
+configFile='config/default-scratch-def.json'
 devhubusername=''
 
 while getopts a:d:f:v: option; do
@@ -30,8 +30,8 @@ fi
 echo "sf project deploy start -o $alias"
 sf project deploy start -o "$alias"
 
-echo "sf data tree import -p data/plans/minimal-plan.json -o $alias"
-sf data tree import -p data/plans/minimal-plan.json -o "$alias"
+echo "sf data tree import -p data/plans/multi-currency-plan.json -o $alias"
+sf data tree import -p data/plans/multi-currency-plan.json -o "$alias"
 
 echo "sf org open -o $alias"
 sf org open -o "$alias"
