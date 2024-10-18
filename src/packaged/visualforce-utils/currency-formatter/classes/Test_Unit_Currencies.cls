@@ -15,7 +15,8 @@ public class Test_Unit_Currencies {
     @isTest
     static void format_UserDefaultCurrency_FormatsToConfig() {
         // Arrange
-        Currency__mdt userDefaultMock = makeDefaultMock(UserInfo.getDefaultCurrency());
+        String testCurrencyCode = UserInfo.getDefaultCurrency();
+        Currency__mdt userDefaultMock = makeDefaultMock(testCurrencyCode);
         Currencies.setMockCurrencyConfiguration(userDefaultMock);
 
         // Act & Assert
@@ -35,7 +36,11 @@ public class Test_Unit_Currencies {
             1000000.00 => '1.000.000,00 €'
         };
         for (Decimal inputValue : inputOutputs.keySet()) {
-            System.Assert.areEqual(inputOutputs.get(inputValue), Currencies.format('EUR', inputValue), 'output matches expected');
+            System.Assert.areEqual(
+                inputOutputs.get(inputValue),
+                Currencies.format(testCurrencyCode, inputValue),
+                'output matches expected'
+            );
         }
     }
 
