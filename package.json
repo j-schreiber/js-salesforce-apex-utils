@@ -10,7 +10,7 @@
   },
   "author": "Jannis Schreiber",
   "devDependencies": {
-    "prettier": "^2.4.1",
-    "prettier-plugin-apex": "^1.10.0"
+    "prettier": "^3.3.3",
+    "prettier-plugin-apex": "^2.1.5"
   }
 }

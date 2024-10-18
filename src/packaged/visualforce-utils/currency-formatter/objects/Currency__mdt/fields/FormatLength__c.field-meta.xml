@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FormatLength__c</fullName>
     <description>The default format length that is used when formatting this currency.</description>
-    <inlineHelpText>Provide the default format mode that is used, when the currency is formatted. Short only prints the symbol, Medium prints ISO code and Explicit prints symbol and ISO code.</inlineHelpText>
+    <inlineHelpText>Provide the default format mode that is used, when the currency is formatted. SYMBOL only prints the symbol, ISO CODE prints ISO code and EXPLICIT prints symbol and ISO code.</inlineHelpText>
     <externalId>false</externalId>
     <fieldManageability>SubscriberControlled</fieldManageability>
     <label>Format Length</label>

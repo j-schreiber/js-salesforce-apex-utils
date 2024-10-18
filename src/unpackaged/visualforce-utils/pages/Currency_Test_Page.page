@@ -21,7 +21,11 @@
         <c:currencyOutput value="1234.11" currencyIsoCode="EUR" />
     </p>
     <p>
-        <c:currencyOutput value="1234.11" currencyIsoCode="EUR" style="ISO_CODE" />
+        <c:currencyOutput
+            value="1234.11"
+            currencyIsoCode="EUR"
+            style="ISO_CODE"
+        />
     </p>
     <p>
         <c:currencyOutput value="-1234.11" currencyIsoCode="EUR" />
@@ -30,13 +34,17 @@
         <c:currencyOutput value="1234.11" currencyIsoCode="EUR" />
     </p>
     <p>
-       <c:currencyOutput value="1234.56" currencyIsoCode="EUR" />
+        <c:currencyOutput value="1234.56" currencyIsoCode="EUR" />
     </p>
     <p>
         <c:currencyOutput value="122234.11" currencyIsoCode="CAD" />
     </p>
     <p>
-        <c:currencyOutput value="122234.11" currencyIsoCode="USD" style="SYMBOL" />
+        <c:currencyOutput
+            value="122234.11"
+            currencyIsoCode="USD"
+            style="SYMBOL"
+        />
     </p>
     <p>
         <c:currencyOutput value="122234.11" currencyIsoCode="USD" />

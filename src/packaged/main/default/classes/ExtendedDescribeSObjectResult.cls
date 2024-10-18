@@ -4,7 +4,7 @@
  *
  * @group SObject Utilities
  */
-public class ExtendedDescribeSObjectResult {
+global class ExtendedDescribeSObjectResult {
     private Schema.DescribeSObjectResult describeResult;
     private Schema.SObjectType sObjectToken;
     private Map<String, Schema.DescribeFieldResult> parentRelationships;
@@ -31,7 +31,7 @@ public class ExtendedDescribeSObjectResult {
      *
      * @return  `Schema.DescribeSObjectResult`
      */
-    public Schema.DescribeSObjectResult getResult() {
+    global Schema.DescribeSObjectResult getResult() {
         return this.describeResult;
     }
 
@@ -40,7 +40,7 @@ public class ExtendedDescribeSObjectResult {
      *
      * @return  `Schema.SObjectType`
      */
-    public Schema.SObjectType getToken() {
+    global Schema.SObjectType getToken() {
         return this.sObjectToken;
     }
 
@@ -49,7 +49,7 @@ public class ExtendedDescribeSObjectResult {
      *
      * @return  `Map<String, Schema.SObjectField>`
      */
-    public Map<String, Schema.SObjectField> getFields() {
+    global Map<String, Schema.SObjectField> getFields() {
         return this.getResult().fields.getMap();
     }
 
@@ -59,7 +59,7 @@ public class ExtendedDescribeSObjectResult {
      *
      * @return  `Map<String, Schema.SObjectField>`
      */
-    public Map<String, Schema.SObjectField> getEditableFields() {
+    global Map<String, Schema.SObjectField> getEditableFields() {
         if (this.editableFields == null) {
             this.editableFields = new Map<String, Schema.SObjectField>();
             for (Schema.SObjectField fieldToken : this.getFields().values()) {
@@ -77,7 +77,7 @@ public class ExtendedDescribeSObjectResult {
      *
      * @return  `Map<String, Schema.SObjectField>`
      */
-    public Map<String, Schema.SObjectField> getCustomFields() {
+    global Map<String, Schema.SObjectField> getCustomFields() {
         if (this.customFields == null) {
             this.customFields = new Map<String, Schema.SObjectField>();
             for (Schema.SObjectField fieldToken : this.getFields().values()) {
@@ -94,7 +94,7 @@ public class ExtendedDescribeSObjectResult {
      *
      * @return  `Boolean`
      */
-    public Boolean hasField(String fieldName) {
+    global Boolean hasField(String fieldName) {
         return this.getFields().containsKey(fieldName);
     }
 
@@ -103,7 +103,7 @@ public class ExtendedDescribeSObjectResult {
      *
      * @return  `Map<String, Schema.FieldSet>`
      */
-    public Map<String, Schema.FieldSet> getFieldSets() {
+    global Map<String, Schema.FieldSet> getFieldSets() {
         return this.getResult().fieldsets.getMap();
     }
 
@@ -114,7 +114,7 @@ public class ExtendedDescribeSObjectResult {
      * @return  `Schema.SObjectField`
      * @exception
      */
-    public Schema.SObjectField getField(String fieldName) {
+    global Schema.SObjectField getField(String fieldName) {
         if (!this.hasField(fieldName)) {
             throw new IllegalArgumentException(
                 String.format(System.Label.Is_Not_A_Valid_Field, new List<Object>{ fieldName, this.getToken() })
@@ -130,7 +130,7 @@ public class ExtendedDescribeSObjectResult {
      * @return  `Schema.SObjectField`
      * @exception
      */
-    public Schema.FieldSet getFieldSet(String fieldSetName) {
+    global Schema.FieldSet getFieldSet(String fieldSetName) {
         if (!this.getFieldSets().containsKey(fieldSetName)) {
             throw new IllegalArgumentException(
                 String.format(System.Label.Is_Not_A_Valid_Field_Set, new List<Object>{ fieldSetName, this.getToken() })
@@ -145,7 +145,7 @@ public class ExtendedDescribeSObjectResult {
      *
      * @return  `Map<String, Schema.DescribeFieldResult>`
      */
-    public Map<String, Schema.DescribeFieldResult> getParentRelationshipsAsMap() {
+    global Map<String, Schema.DescribeFieldResult> getParentRelationshipsAsMap() {
         if (this.parentRelationships == null) {
             this.parentRelationships = new Map<String, Schema.DescribeFieldResult>();
             for (Schema.SObjectField field : this.getFields().values()) {
@@ -164,7 +164,7 @@ public class ExtendedDescribeSObjectResult {
      *
      * @return  `Map<String, Schema.SObjectField>`
      */
-    public Map<String, Schema.ChildRelationship> getChildRelationshipsAsMap() {
+    global Map<String, Schema.ChildRelationship> getChildRelationshipsAsMap() {
         if (this.childRelationships == null) {
             this.childRelationships = new Map<String, Schema.ChildRelationship>();
             List<Schema.ChildRelationship> crs = this.getResult().getChildRelationships();
@@ -184,7 +184,7 @@ public class ExtendedDescribeSObjectResult {
      * @return  `Schema.ChildRelationship`
      * @exception
      */
-    public Schema.ChildRelationship getChildRelationship(String relationshipName) {
+    global Schema.ChildRelationship getChildRelationship(String relationshipName) {
         String lowerCaseName = relationshipName.toLowerCase();
         if (!this.getChildRelationshipsAsMap().containsKey(lowerCaseName)) {
             throw new IllegalArgumentException(
@@ -201,7 +201,7 @@ public class ExtendedDescribeSObjectResult {
      * @return  `Schema.DescribeFieldResult`
      * @exception
      */
-    public Schema.DescribeFieldResult getParentRelationship(String relationshipName) {
+    global Schema.DescribeFieldResult getParentRelationship(String relationshipName) {
         Schema.SObjectField fieldToken = this.getFieldTokenForRelationshipField(relationshipName);
         if (String.isBlank(fieldToken.getDescribe().getRelationshipName())) {
             throw new IllegalArgumentException(
@@ -218,7 +218,7 @@ public class ExtendedDescribeSObjectResult {
      * @param fieldLiteral
      * @return  `List<Schema.SObjectField>`
      */
-    public List<Schema.SObjectField> resolveFieldLiteral(String fieldLiteral) {
+    global List<Schema.SObjectField> resolveFieldLiteral(String fieldLiteral) {
         List<Schema.SObjectField> fieldList = new List<Schema.SObjectField>();
         if (fieldLiteral.substringBefore('.') == fieldLiteral) {
             fieldList.add(this.getField(fieldLiteral));
