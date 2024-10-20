@@ -7,8 +7,8 @@
     {
       "path": "src/packaged",
       "package": "Power Suite Utils",
-      "definitionFile": "config/default-scratch-def.json",
-      "versionNumber": "0.2.0.NEXT",
+      "definitionFile": "config/minimal-enterprise-def.json",
+      "versionNumber": "0.3.0.NEXT",
       "ancestorVersion": "HIGHEST",
       "default": false,
       "versionDescription": "Awesome Apex and Visualforce utilities"
