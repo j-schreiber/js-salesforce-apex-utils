@@ -1,0 +1,14 @@
+[
+  {
+    "sobjectName": "Account",
+    "resolveRefs": true,
+    "operationName": "Accounts_Import",
+    "files": ["Apex_Utils_Default_Business_Accounts_1"]
+  },
+  {
+    "sobjectName": "Contact",
+    "resolveRefs": true,
+    "operationName": "Contacts_Import",
+    "files": ["Apex_Utils_Default_Contacts"]
+  }
+]

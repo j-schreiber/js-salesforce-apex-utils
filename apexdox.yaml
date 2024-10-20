@@ -2,6 +2,7 @@ engine:
   targetDirectory: "${workspaceFolder}/docs"
 
   source:
+    - path: "${workspaceFolder}/src/packaged/data-loader/classes"
     - path: "${workspaceFolder}/src/packaged/main/default/classes"
     - path: "${workspaceFolder}/src/packaged/stub-provider/default/classes"
     - path: "${workspaceFolder}/src/packaged/trigger-framework/default/classes"

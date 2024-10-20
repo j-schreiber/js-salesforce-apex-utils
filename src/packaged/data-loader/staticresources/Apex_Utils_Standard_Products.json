@@ -1,0 +1,31 @@
+{
+  "records": [
+    {
+      "attributes": {
+        "type": "Product2",
+        "referenceId": "A0001"
+      },
+      "Name": "Test Product 1",
+      "ProductCode": "A-0001",
+      "IsActive": true
+    },
+    {
+      "attributes": {
+        "type": "Product2",
+        "referenceId": "A0002"
+      },
+      "Name": "Test Product 2",
+      "ProductCode": "A-0002",
+      "IsActive": true
+    },
+    {
+      "attributes": {
+        "type": "Product2",
+        "referenceId": "A0003"
+      },
+      "Name": "Test Product 3",
+      "ProductCode": "A-0003",
+      "IsActive": true
+    }
+  ]
+}
