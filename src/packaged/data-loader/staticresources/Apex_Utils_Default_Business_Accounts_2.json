@@ -1,0 +1,22 @@
+{
+  "records": [
+    {
+      "attributes": {
+        "type": "Account",
+        "referenceId": "AccountRef1"
+      },
+      "Name": "First Test Company 1",
+      "AccountNumber": "2000",
+      "BillingCity": "Berlin"
+    },
+    {
+      "attributes": {
+        "type": "Account",
+        "referenceId": "AccountRef2"
+      },
+      "Name": "Second Test Company 2",
+      "AccountNumber": "2001",
+      "BillingCity": "Hamburg"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "records": [
+    {
+      "attributes": {
+        "referenceId": "AccRef1"
+      },
+      "Name": "Test Account 1"
+    },
+    {
+      "attributes": {
+        "referenceId": ""
+      },
+      "Name": "Test Account 2"
+    }
+  ]
+}

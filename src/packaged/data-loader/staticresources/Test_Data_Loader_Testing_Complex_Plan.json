@@ -1,0 +1,33 @@
+[
+  {
+    "sobjectName": "Product2",
+    "files": ["Apex_Utils_Standard_Products"]
+  },
+  {
+    "sobjectName": "Account",
+    "resolveRefs": true,
+    "operationName": "Accounts_Import",
+    "files": [
+      "Apex_Utils_Default_Business_Accounts_1",
+      "Apex_Utils_Default_Business_Accounts_2"
+    ]
+  },
+  {
+    "sobjectName": "Contact",
+    "resolveRefs": true,
+    "operationName": "Contacts_Import",
+    "files": ["Apex_Utils_Default_Contacts"]
+  },
+  {
+    "sobjectName": "Asset",
+    "resolveRefs": true,
+    "operationName": "My_Assets_Import",
+    "files": ["Apex_Utils_Standard_Assets"]
+  },
+  {
+    "sobjectName": "Case",
+    "resolveRefs": false,
+    "operationName": "Cases",
+    "files": ["Apex_Utils_Data_Default_Cases"]
+  }
+]

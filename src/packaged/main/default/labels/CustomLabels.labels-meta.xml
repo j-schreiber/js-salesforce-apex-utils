@@ -289,4 +289,116 @@
         <shortDescription>Currency ISO code is an unknown Currency__mdt in org</shortDescription>
         <value>Invalid currency ISO Code: {0}. Configure the Currency__mdt before using it.</value>
     </labels>
+    <labels>
+        <fullName>Cannot_Deserialize_Plan_File_JSON_Exception</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Deserialization exception when invalid plan file is supplied</shortDescription>
+        <value>Dannot deserialize file to a valid test data plan: {0}</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Reference_SObject_Field_Misses_Identifier</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message when reference value in source file misses identifier</shortDescription>
+        <value>Invalid reference "{0}" in {1} for {2}. References must be identified with "@"-symbol.</value>
+    </labels>
+    <labels>
+        <fullName>Unknown_Reference_Value_Check_Source_Files</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message when unknown identifier was referenced</shortDescription>
+        <value>Unknown reference value "{0}" in {1} for {2}. No {3} found. Check all source files for {3} imports.</value>
+    </labels>
+    <labels>
+        <fullName>Ambiguous_Reference_Key_For_SObject_In_Source_Files</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message for duplicated references in source files for same sobject</shortDescription>
+        <value>Ambiguous reference key "{0}" for sobject type {1} in file {2}. References must be unique accross a SObject.</value>
+    </labels>
+    <labels>
+        <fullName>Tried_To_Resolve_Reference_To_Non_Inserted_Record</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message when reference record is not inserted</shortDescription>
+        <value>Tried to resolve reference {0} on {1}, but the record was not yet inserted. Check order of execution.</value>
+    </labels>
+    <labels>
+        <fullName>Specified_Record_Type_Is_Invalid_For_SObject</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message when record type does not exist</shortDescription>
+        <value>Specified record type is invalid for object {1}: {0}</value>
+    </labels>
+    <labels>
+        <fullName>No_Plan_File_Found_For_Name</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message when unknown plan file name was supplied</shortDescription>
+        <value>No import plan found for: {0}</value>
+    </labels>
+    <labels>
+        <fullName>No_Records_File_Found_For_Name</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message when unknown records file name was supplied</shortDescription>
+        <value>No records file found for: {0}</value>
+    </labels>
+    <labels>
+        <fullName>Unknown_Operation_Name_Requested</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message when accessing a named operation that does not exist</shortDescription>
+        <value>Unknown operation name "{0}". Names are case sensitive and configured in the plan file using "operationName" property.</value>
+    </labels>
+    <labels>
+        <fullName>Operation_Name_Already_Exists_In_Plan</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message when trying to add duplicate operation name</shortDescription>
+        <value>There already exists an import operation with name "{0}" at position {1} in the plan. Names must be unique accross the plan.</value>
+    </labels>
+    <labels>
+        <fullName>Test_Record_Has_No_Reference_Key</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message for invalid source file with blank reference ids</shortDescription>
+        <value>Record at position {1} in source file {0} does not specify a reference key. Specify a unique key with "attributes.referenceId".</value>
+    </labels>
+    <labels>
+        <fullName>References_To_Other_Records_Must_Be_String_Or_Id</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message if reference in lookup field is invalid</shortDescription>
+        <value>References to other records must be a String with "@" notation or a valid Id. Actual value: {0}</value>
+    </labels>
+    <labels>
+        <fullName>Date_Or_Formula_Does_Not_Match_RegEx</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception if date formula in data loader is invalid</shortDescription>
+        <value>Date does not match the pattern yyyy-MM-dd or the formula does not match the regular expression {0} ({1}).</value>
+    </labels>
+    <labels>
+        <fullName>Test_Record_Has_No_Valid_Attributes</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception message for invalid source file with blank reference ids</shortDescription>
+        <value>Record at position {1} in source file {0} does not specify attributes. Add attributes object.</value>
+    </labels>
 </CustomLabels>
