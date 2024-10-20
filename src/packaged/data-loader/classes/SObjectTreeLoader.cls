@@ -97,7 +97,7 @@ global without sharing class SObjectTreeLoader {
     public Map<String, SObjectTreeRecord> getRecordsBySObjectType(Schema.SObjectType sobjectType) {
         Map<String, SObjectTreeRecord> allRecords = new Map<String, SObjectTreeRecord>();
         for (SObjectTreeBranchOperation op : this.filterOperationsByType(sobjectType)) {
-            allRecords.putAll(op.getPrototypes());
+            allRecords.putAll(op.getTreeRecords());
         }
         return allRecords;
     }

@@ -401,4 +401,12 @@
         <shortDescription>Exception message for invalid source file with blank reference ids</shortDescription>
         <value>Record at position {1} in source file {0} does not specify attributes. Add attributes object.</value>
     </labels>
+    <labels>
+        <fullName>Invalid_SObject_Type_In_Import_Definition</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception when parsing plan file with invalid sobjectName</shortDescription>
+        <value>Invalid sobject type in import definition: {0}</value>
+    </labels>
 </CustomLabels>

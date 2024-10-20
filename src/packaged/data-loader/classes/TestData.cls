@@ -73,7 +73,9 @@ global without sharing class TestData {
 
     private static void parseSObjectName(String sobjectName) {
         if (ExtendedSchema.describeSObject(sobjectName) == null) {
-            throw new IllegalArgumentException('Invalid sobject type in import definition: ' + sobjectName);
+            throw new IllegalArgumentException(
+                String.format(System.Label.Invalid_SObject_Type_In_Import_Definition, new List<Object>{ sobjectName })
+            );
         }
     }
 

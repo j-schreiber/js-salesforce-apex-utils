@@ -72,7 +72,7 @@ public class SObjectTreeBranchOperation {
      * @return  `SObjectTreeBranchOperation`
      */
     public SObjectTreeBranchOperation setField(Schema.SObjectField fieldToken, Object fieldValue) {
-        for (SObjectTreeRecord dlr : this.getPrototypes().values()) {
+        for (SObjectTreeRecord dlr : this.getTreeRecords().values()) {
             dlr.putValue(fieldToken, fieldValue);
         }
         return this;
@@ -114,7 +114,7 @@ public class SObjectTreeBranchOperation {
         return records;
     }
 
-    public Map<String, SObjectTreeRecord> getPrototypes() {
+    public Map<String, SObjectTreeRecord> getTreeRecords() {
         return this.recordPrototypes;
     }
 
@@ -129,7 +129,7 @@ public class SObjectTreeBranchOperation {
     public List<SObject> getRecords() {
         String listType = 'List<' + this.getSObjectType() + '>';
         List<SObject> records = (List<SObject>) Type.forName(listType).newInstance();
-        for (SObjectTreeRecord dlr : this.getPrototypes().values()) {
+        for (SObjectTreeRecord dlr : this.getTreeRecords().values()) {
             records.add(dlr.resolve(this.resolveReferences));
         }
         return records;

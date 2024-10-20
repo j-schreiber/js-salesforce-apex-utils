@@ -24,23 +24,45 @@ public class SObjectTreeRecord {
         return (String) this.recordAttributes.get('referenceId');
     }
 
-    public Map<String, Object> getRawValues() {
+    /**
+     * Returns the raw key/value map from JSON input.
+     *
+     * @return  `Map<String, Object>`
+     */
+    public Map<String, Object> getPrototype() {
         return this.prototype;
     }
 
+    /**
+     * The fully initialised SObject record, after `resolve` was used.
+     *
+     * @return  `SObject`
+     */
     public SObject getRecord() {
         return this.record;
     }
 
+    /**
+     * Resolves the prototype-map to an actual sobject record and caches the result.
+     * This method resolves references ("@"-notation).
+     *
+     * @return  `SObject`
+     */
     public SObject resolve() {
         return this.resolve(true);
     }
 
+    /**
+     * Resolves the prototype-map to an actual sobject record and caches the result.
+     *
+     * @param resolveReferences Specify, if references should be resolved.
+     * @return  `SObject`
+     */
     public SObject resolve(Boolean resolveReferences) {
-        for (String fieldName : this.getRawValues().keySet()) {
+        for (String fieldName : this.getPrototype().keySet()) {
             Schema.DescribeFieldResult fieldDescribe = this.sobjectDescribe.getField(fieldName).getDescribe();
             FieldResolver fr = loadResolver(fieldDescribe, resolveReferences);
-            this.record.put(fieldName, fr.resolveFieldValue(this.getRawValues().get(fieldName)));
+            this.record.put(fieldName, fr.resolveFieldValue(this.getPrototype().get(fieldName)));
         }
         return this.record;
     }

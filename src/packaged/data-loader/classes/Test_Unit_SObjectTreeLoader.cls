@@ -10,9 +10,9 @@ public class Test_Unit_SObjectTreeLoader {
         // Assert
         System.Assert.areEqual(2, dl.getOperations().size(), 'operations initialised');
         System.Assert.areEqual(Schema.Account.getSObjectType(), dl.getOperations()[0].getSObjectType(), 'first operation type');
-        System.Assert.areEqual(3, dl.getOperations()[0].getPrototypes().size(), 'records for first operation');
+        System.Assert.areEqual(3, dl.getOperations()[0].getTreeRecords().size(), 'records for first operation');
         System.Assert.areEqual(Schema.Account.getSObjectType(), dl.getOperations()[1].getSObjectType(), 'second operation type');
-        System.Assert.areEqual(2, dl.getOperations()[1].getPrototypes().size(), 'records for second operation');
+        System.Assert.areEqual(2, dl.getOperations()[1].getTreeRecords().size(), 'records for second operation');
         System.Assert.areEqual(5, dl.getRecordsBySObjectType(Schema.Account.getSObjectType()).size(), 'size of all account records');
     }
 
@@ -62,7 +62,7 @@ public class Test_Unit_SObjectTreeLoader {
         System.Assert.areEqual(3, records.size(), 'number of records initialised');
         System.Assert.areEqual(
             new Set<String>{ 'Starship', 'ColonialOne', 'CloudNine' },
-            businessAccOp.getPrototypes().keySet(),
+            businessAccOp.getTreeRecords().keySet(),
             'prototypes keyset'
         );
         System.Assert.areEqual('Starship Galactica Ltd.', records[0].Name, 'name of first record');
@@ -83,20 +83,20 @@ public class Test_Unit_SObjectTreeLoader {
         SObjectTreeBranchOperation contactOp = dl.getOperations()[1];
 
         // Assert
-        System.Assert.areEqual(new Set<String>{ 'ContactRef1', 'ContactRef2' }, contactOp.getPrototypes().keySet(), 'prototypes keyset');
-        SObjectTreeRecord firstContact = contactOp.getPrototypes().get('ContactRef1');
-        System.Assert.areEqual('Adama', firstContact.getRawValues().get('LastName'), 'last name of first record');
-        System.Assert.areEqual('@Starship', firstContact.getRawValues().get('AccountId'), 'reference placeholder of first record');
-        SObjectTreeRecord secondContact = contactOp.getPrototypes().get('ContactRef2');
-        System.Assert.areEqual('Roslin', secondContact.getRawValues().get('LastName'), 'last name of second record');
-        System.Assert.areEqual('@Starship', secondContact.getRawValues().get('AccountId'), 'reference placeholder of second record');
+        System.Assert.areEqual(new Set<String>{ 'ContactRef1', 'ContactRef2' }, contactOp.getTreeRecords().keySet(), 'prototypes keyset');
+        SObjectTreeRecord firstContact = contactOp.getTreeRecords().get('ContactRef1');
+        System.Assert.areEqual('Adama', firstContact.getPrototype().get('LastName'), 'last name of first record');
+        System.Assert.areEqual('@Starship', firstContact.getPrototype().get('AccountId'), 'reference placeholder of first record');
+        SObjectTreeRecord secondContact = contactOp.getTreeRecords().get('ContactRef2');
+        System.Assert.areEqual('Roslin', secondContact.getPrototype().get('LastName'), 'last name of second record');
+        System.Assert.areEqual('@Starship', secondContact.getPrototype().get('AccountId'), 'reference placeholder of second record');
     }
 
     @isTest
     static void resolveRecords_InvalidReferenceInLookupField_ThrowsException() {
         // Arrange
         SObjectTreeLoader dl = TestData.newSObjectTreeLoader('Test_Data_Loader_Testing_Plan');
-        dl.getOperations()[1].getPrototypes().get('ContactRef1').getRawValues().put('AccountId', 'Starship');
+        dl.getOperations()[1].getTreeRecords().get('ContactRef1').getPrototype().put('AccountId', 'Starship');
 
         // Act
         try {
@@ -123,7 +123,7 @@ public class Test_Unit_SObjectTreeLoader {
 
         // Act
         try {
-            dl.getOperations()[1].getPrototypes().get('ContactRef2').getRawValues().put('AccountId', '@NotExistingInAccsFile');
+            dl.getOperations()[1].getTreeRecords().get('ContactRef2').getPrototype().put('AccountId', '@NotExistingInAccsFile');
             List<Contact> contacts = (List<Contact>) dl.getOperations()[1].getRecords();
             System.Assert.fail('Expected exception');
         } catch (SObjectTreeLoaderException dle) {
@@ -228,7 +228,7 @@ public class Test_Unit_SObjectTreeLoader {
         // Arrange
         SObjectTreeLoader dl = TestData.newSObjectTreeLoader('Test_Data_Loader_Testing_Plan');
         mockAccountOperationIds(dl);
-        Id fakeAccId = dl.getOperations()[0].getPrototypes().get('Starship').getRecord().Id;
+        Id fakeAccId = dl.getOperations()[0].getTreeRecords().get('Starship').getRecord().Id;
         System.Assert.isNotNull(fakeAccId, 'fakeAccId was mocked successfully');
 
         // Act
@@ -255,8 +255,8 @@ public class Test_Unit_SObjectTreeLoader {
         dl.getOperation('My_Assets_Import').setField(Schema.Asset.Status, 'Active').getSObjectTreeLoader();
 
         // Assert
-        for (SObjectTreeRecord assetPrototype : dl.getOperation('My_Assets_Import').getPrototypes().values()) {
-            System.Assert.areEqual(assetPrototype.getRawValues().get('Status'), 'Active', 'asset prototype status was updated');
+        for (SObjectTreeRecord assetPrototype : dl.getOperation('My_Assets_Import').getTreeRecords().values()) {
+            System.Assert.areEqual(assetPrototype.getPrototype().get('Status'), 'Active', 'asset prototype status was updated');
         }
         for (Asset ass : (List<Asset>) dl.getOperation('My_Assets_Import').getRecords()) {
             System.Assert.areEqual(ass.Status, 'Active', 'asset status was updated');
@@ -446,13 +446,13 @@ public class Test_Unit_SObjectTreeLoader {
     }
 
     private static void mockAccountOperationIds(SObjectTreeLoader testLoader) {
-        for (SObjectTreeRecord accRec : testLoader.getOperation('Accounts_Import').getPrototypes().values()) {
+        for (SObjectTreeRecord accRec : testLoader.getOperation('Accounts_Import').getTreeRecords().values()) {
             accRec.getRecord().Id = TestMockFactory.generateFakeId(Schema.Account.getSObjectType());
         }
     }
 
     private static void mockContactOperationIds(SObjectTreeLoader testLoader) {
-        for (SObjectTreeRecord cRec : testLoader.getOperation('Contacts_Import').getPrototypes().values()) {
+        for (SObjectTreeRecord cRec : testLoader.getOperation('Contacts_Import').getTreeRecords().values()) {
             cRec.getRecord().Id = TestMockFactory.generateFakeId(Schema.Contact.getSObjectType());
         }
     }
