@@ -32,6 +32,10 @@ public class ApexTypeUtils {
         }
     }
 
+    public static String getTypeNameFromInstance(Object anyInputObject) {
+        return String.valueOf(anyInputObject).split(':')[0];
+    }
+
     public static String getClassNamespacePrefix(System.Type classType) {
         List<String> classNameParts = String.valueOf(classType).split('\\.', 2);
         if (classNameParts.size() > 1) {
