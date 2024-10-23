@@ -23,7 +23,7 @@ public class SObjectTreeBranchOperation {
     //          BUILDER API
 
     /**
-     * Adds a source file to the import operation.
+     * Queries a source file by its name and adds it to the operation.
      *
      * @param sourceFileName
      * @return  `SObjectTreeBranchOperation`
@@ -37,7 +37,7 @@ public class SObjectTreeBranchOperation {
     }
 
     /**
-     * Adds an addition source file to this operation. All records in all files
+     * Adds a source file to this operation. All records in all files
      * will be merged and reference ids are checked for uniqueness.
      *
      * @param sourceFile
@@ -46,6 +46,7 @@ public class SObjectTreeBranchOperation {
     public SObjectTreeBranchOperation addSourceFile(StaticResource sourceFile) {
         Map<String, SObjectTreeRecord> extractedPrototypes = this.deserializeSourceFile(sourceFile);
         this.assertUniquenessAccrossAllOperations(extractedPrototypes.keySet(), sourceFile);
+        this.assertSObjectType(extractedPrototypes);
         this.recordPrototypes.putAll(extractedPrototypes);
         return this;
     }
@@ -181,6 +182,22 @@ public class SObjectTreeBranchOperation {
             throw new SObjectTreeLoaderException(
                 String.format(System.Label.Test_Record_Has_No_Reference_Key, new List<Object>{ fileName, index + 1 })
             );
+        }
+    }
+
+    private void assertSObjectType(Map<String, SObjectTreeRecord> recordPrototypes) {
+        for (SObjectTreeRecord proto : recordPrototypes.values()) {
+            if (proto.getSObjectType() == null) {
+                continue;
+            }
+            if (proto.getSObjectType() != this.getSObjectType()) {
+                throw new SObjectTreeLoaderException(
+                    String.format(
+                        System.Label.Incompatible_SObject_Type_In_Source_File_Added_To_Operation,
+                        new List<Object>{ this.getSObjectType(), proto.getSObjectType() }
+                    )
+                );
+            }
         }
     }
 }

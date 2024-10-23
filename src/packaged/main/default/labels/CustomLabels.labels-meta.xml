@@ -409,4 +409,12 @@
         <shortDescription>Exception when parsing plan file with invalid sobjectName</shortDescription>
         <value>Invalid sobject type in import definition: {0}</value>
     </labels>
+    <labels>
+        <fullName>Incompatible_SObject_Type_In_Source_File_Added_To_Operation</fullName>
+        <categories>sobject-tree-loader</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exception parsing plan or adding source file with incompatible types</shortDescription>
+        <value>Incompatible sobject types: Operation is defined as {0}, but source file defines {1} records.</value>
+    </labels>
 </CustomLabels>

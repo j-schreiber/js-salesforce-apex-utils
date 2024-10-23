@@ -49,6 +49,39 @@ public class Test_Unit_SObjectTreeLoader {
     }
 
     @isTest
+    static void addSourceFile_IncompatibleRecordsToOperationType_ThrowsException() {
+        // Arrange
+        SObjectTreeLoader dl = new SObjectTreeLoader();
+        SObjectTreeBranchOperation contactOp = dl.addOperation(Contact.SObjectType);
+
+        // Act
+        try {
+            contactOp.addSourceFile('Apex_Utils_Default_Business_Accounts_1');
+            System.Assert.fail('Expected exception');
+        } catch (SObjectTreeLoaderException dle) {
+            String expectedMessage = String.format(
+                System.Label.Incompatible_SObject_Type_In_Source_File_Added_To_Operation,
+                new List<Object>{ 'Contact', 'Account' }
+            );
+            System.Assert.areEqual(expectedMessage, dle.getMessage(), 'exception message');
+        }
+        System.Assert.areEqual(0, contactOp.getTreeRecords().size(), 'tree records in contact op');
+        System.Assert.areEqual(0, contactOp.getRecords().size(), 'records in contact op');
+    }
+
+    @isTest
+    static void addSourceFile_FileDoesNotSpecifyRecordTypes_AddsRecordsToOperation() {
+        // Arrange
+        SObjectTreeLoader dl = new SObjectTreeLoader();
+        SObjectTreeBranchOperation contactOp = dl.addOperation(Contact.SObjectType);
+
+        // Act
+        contactOp.addSourceFile('Apex_Utils_Data_Default_Cases');
+        // resolving getRecords would fail, but that's okay in this test scenario
+        System.Assert.areEqual(3, contactOp.getTreeRecords().size(), 'prototypes in contact op');
+    }
+
+    @isTest
     static void getRecords_BasicAccountRecordTransaction_InitialisesRecordsFromJSON() {
         // Arrange
         SObjectTreeLoader dl = new SObjectTreeLoader();

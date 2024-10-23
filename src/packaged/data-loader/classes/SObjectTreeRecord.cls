@@ -24,6 +24,15 @@ public class SObjectTreeRecord {
         return (String) this.recordAttributes.get('referenceId');
     }
 
+    public Schema.SObjectType getSObjectType() {
+        String sObjectName = (String) this.recordAttributes.get('type');
+        if (String.isBlank(sObjectName)) {
+            return null;
+        } else {
+            return ExtendedSchema.describeSObject(sObjectName).getToken();
+        }
+    }
+
     /**
      * Returns the raw key/value map from JSON input.
      *
