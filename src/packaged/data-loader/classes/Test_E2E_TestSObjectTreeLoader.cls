@@ -208,6 +208,45 @@ public class Test_E2E_TestSObjectTreeLoader {
         }
     }
 
+    @isTest
+    static void loadRecords_PlanWithRecordFactory_FactoryRecordsInserted() {
+        // Act
+        TestData.load('Test_Data_Loader_Factory_Test_Plan');
+
+        // Assert
+        System.Assert.areEqual(3, [SELECT COUNT() FROM Account], 'number of accounts');
+        System.Assert.areEqual(2, [SELECT COUNT() FROM Contact], 'number of contacts');
+        Account firstTestAcc = [SELECT Id, (SELECT Id FROM Contacts) FROM Account WHERE AccountNumber = '1000'];
+        System.Assert.areEqual(2, firstTestAcc.Contacts.size(), 'contacts for starship account (1000)');
+    }
+
+    @isTest
+    static void loadRecords_ConstructLoaderWithRecordFactory_FactoryRecordsInserted() {
+        // Act
+        SObjectTreeLoader stl = new SObjectTreeLoader()
+            .addOperation(Account.SObjectType)
+            .addFactory(new SObjectTreeLoaderMocks.BusinessAccountMocks1())
+            .getSObjectTreeLoader()
+            .addOperation(Contact.SObjectType)
+            .addFactory(new SObjectTreeLoaderMocks.DynamicContactMocks())
+            .getSObjectTreeLoader()
+            .addOperation(Case.SObjectType)
+            .addSourceFile('Apex_Utils_Data_Default_Cases')
+            .getSObjectTreeLoader()
+            .executePlan();
+
+        // Assert
+        System.Assert.areEqual(3, [SELECT COUNT() FROM Account], 'number of accounts');
+        System.Assert.areEqual(9, [SELECT COUNT() FROM Contact], 'number of contacts');
+        System.Assert.areEqual(3, [SELECT COUNT() FROM Case], 'number of cases');
+        for (Account acc : [SELECT Id, Name, (SELECT Id FROM Contacts) FROM Account]) {
+            System.Assert.areEqual(3, acc.Contacts.size(), 'contacts for account: ' + acc.Name);
+        }
+        for (Case c : [SELECT Id, AccountId, Subject FROM Case]) {
+            System.Assert.areNotEqual(null, c.AccountId, 'case is related to an account: ' + c.Subject);
+        }
+    }
+
     private static void setMockTriggerSetting(String objectName, String mockHandler) {
         TriggerFeatureControl__mdt mockSetting = TriggersMocks.makeTriggerControl('DATA_LOADER_MOCK_SETTING', mockHandler);
         mockSetting.RunOnBeforeInsert__c = true;

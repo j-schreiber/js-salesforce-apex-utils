@@ -14,6 +14,12 @@ public class SObjectTreeRecord {
         this.record = this.sobjectDescribe.getToken().newSObject();
     }
 
+    public SObjectTreeRecord(SObject templateRecord, SObjectTreeBranchOperation parentOperation) {
+        this.sobjectDescribe = parentOperation.getDescribe();
+        this.parentOperation = parentOperation;
+        this.record = templateRecord;
+    }
+
     //          PUBLIC API
 
     public void putValue(Schema.SObjectField fieldToken, Object fieldValue) {
@@ -24,8 +30,13 @@ public class SObjectTreeRecord {
         return (String) this.recordAttributes.get('referenceId');
     }
 
+    /**
+     * SObject type of the tree record
+     *
+     * @return  `Schema.SObjectType`
+     */
     public Schema.SObjectType getSObjectType() {
-        String sObjectName = (String) this.recordAttributes.get('type');
+        String sObjectName = (String) this.recordAttributes?.get('type');
         if (String.isBlank(sObjectName)) {
             return null;
         } else {
@@ -68,6 +79,9 @@ public class SObjectTreeRecord {
      * @return  `SObject`
      */
     public SObject resolve(Boolean resolveReferences) {
+        if (this.getPrototype() == null) {
+            return this.record;
+        }
         for (String fieldName : this.getPrototype().keySet()) {
             Schema.DescribeFieldResult fieldDescribe = this.sobjectDescribe.getField(fieldName).getDescribe();
             FieldResolver fr = loadResolver(fieldDescribe, resolveReferences);

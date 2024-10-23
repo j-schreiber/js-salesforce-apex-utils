@@ -8,7 +8,6 @@
 global without sharing class SObjectTreeLoader {
     private List<SObjectTreeBranchOperation> importOperations;
     private Map<String, SObjectTreeBranchOperation> namedOperations;
-    private Map<Schema.SObjectType, Map<String, SObjectTreeRecord>> allRecords;
 
     public SObjectTreeLoader() {
         this.importOperations = new List<SObjectTreeBranchOperation>();
@@ -67,8 +66,17 @@ global without sharing class SObjectTreeLoader {
      */
     public SObjectTreeBranchOperation addOperation(SObjectTreeBranchDefinition branchDef) {
         SObjectTreeBranchOperation op = new SObjectTreeBranchOperation(this, ExtendedSchema.describeSObject(branchDef.sobjectName));
-        for (String sourceFileName : branchDef.files) {
-            op.addSourceFile(sourceFileName);
+        if (branchDef.files != null) {
+            for (String sourceFileName : branchDef.files) {
+                op.addSourceFile(sourceFileName);
+            }
+        }
+        if (branchDef.factories != null) {
+            for (String factoryName : branchDef.factories) {
+                op.addFactory(
+                    (ISObjectTreeRecordsFactory) ApexTypeUtils.initializeInstanceFromName(factoryName, ISObjectTreeRecordsFactory.class)
+                );
+            }
         }
         op.setBypassTriggers(branchDef.bypassTriggers);
         if (branchDef.resolveRefs != null) {

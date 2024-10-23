@@ -11,6 +11,7 @@ public class SObjectTreeBranchOperation {
     private Boolean bypassTriggers;
     private Boolean resolveReferences;
     SObjectTreeLoader SObjectTreeLoaderTransation;
+    private List<ISObjectTreeRecordsFactory> factories;
 
     public SObjectTreeBranchOperation(SObjectTreeLoader SObjectTreeLoaderTransation, ExtendedDescribeSObjectResult sObjectDescribe) {
         this.sObjectDescribe = sObjectDescribe;
@@ -18,6 +19,7 @@ public class SObjectTreeBranchOperation {
         this.recordPrototypes = new Map<String, SObjectTreeRecord>();
         this.bypassTriggers = false;
         this.resolveReferences = true;
+        this.factories = new List<ISObjectTreeRecordsFactory>();
     }
 
     //          BUILDER API
@@ -45,9 +47,24 @@ public class SObjectTreeBranchOperation {
      */
     public SObjectTreeBranchOperation addSourceFile(StaticResource sourceFile) {
         Map<String, SObjectTreeRecord> extractedPrototypes = this.deserializeSourceFile(sourceFile);
-        this.assertUniquenessAccrossAllOperations(extractedPrototypes.keySet(), sourceFile);
-        this.assertSObjectType(extractedPrototypes);
-        this.recordPrototypes.putAll(extractedPrototypes);
+        this.storePrototypes(extractedPrototypes, sourceFile.Name);
+        return this;
+    }
+
+    /**
+     *
+     *
+     * @param recordFactory
+     * @return  `SObjectTreeBranchOperation`
+     */
+    public SObjectTreeBranchOperation addFactory(ISObjectTreeRecordsFactory recordFactory) {
+        this.factories.add(recordFactory);
+        // Map<String, SObjectTreeRecord> prototypes = new Map<String, SObjectTreeRecord>();
+        // Map<String, SObject> records = recordFactory.getRecords(this.getSObjectTreeLoader());
+        // for (String recordReferenceId : records.keySet()) {
+        //     prototypes.put(recordReferenceId, new SObjectTreeRecord(records.get(recordReferenceId), this));
+        // }
+        // this.storePrototypes(prototypes, ApexTypeUtils.getTypeNameFromInstance(recordFactory));
         return this;
     }
 
@@ -133,10 +150,31 @@ public class SObjectTreeBranchOperation {
         for (SObjectTreeRecord dlr : this.getTreeRecords().values()) {
             records.add(dlr.resolve(this.resolveReferences));
         }
+        this.resolveFactoriesToList(records);
         return records;
     }
 
     //          PRIVATE ZONE
+
+    private void resolveFactoriesToList(List<SObject> records) {
+        // factories are only resolved once
+        for (Integer i = this.factories.size() - 1; i >= 0; i--) {
+            Map<String, SObjectTreeRecord> prototypes = new Map<String, SObjectTreeRecord>();
+            Map<String, SObject> factoryRecords = this.factories[i].getRecords(this.getSObjectTreeLoader());
+            for (String recordReferenceId : factoryRecords.keySet()) {
+                prototypes.put(recordReferenceId, new SObjectTreeRecord(factoryRecords.get(recordReferenceId), this));
+            }
+            this.storePrototypes(prototypes, ApexTypeUtils.getTypeNameFromInstance(this.factories[i]));
+            records.addAll(factoryRecords.values());
+            this.factories.remove(i);
+        }
+    }
+
+    private void storePrototypes(Map<String, SObjectTreeRecord> prototypes, String sourceName) {
+        this.assertUniquenessAccrossAllOperations(prototypes.keySet(), sourceName);
+        this.assertSObjectType(prototypes);
+        this.recordPrototypes.putAll(prototypes);
+    }
 
     private Map<String, SObjectTreeRecord> deserializeSourceFile(StaticResource sourceFile) {
         Map<String, SObjectTreeRecord> prototypes = new Map<String, SObjectTreeRecord>();
@@ -153,11 +191,11 @@ public class SObjectTreeBranchOperation {
         return prototypes;
     }
 
-    private void assertUniquenessAccrossAllOperations(Set<String> keyValues, StaticResource sourceFile) {
+    private void assertUniquenessAccrossAllOperations(Set<String> keyValues, String sourceName) {
         Set<String> existingKeysInOtherOps = this.SObjectTreeLoaderTransation.getRecordsBySObjectType(this.getSObjectType()).keySet();
         for (String newKey : keyValues) {
             if (existingKeysInOtherOps.contains(newKey)) {
-                throwUniquenessConstraintException(newKey, sourceFile.Name);
+                throwUniquenessConstraintException(newKey, sourceName);
             }
         }
     }

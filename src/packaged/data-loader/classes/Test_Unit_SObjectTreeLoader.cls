@@ -276,6 +276,20 @@ public class Test_Unit_SObjectTreeLoader {
     }
 
     @isTest
+    static void getRecords_WithRecordsFactory_RecordsInitialised() {
+        // Act
+        SObjectTreeLoader stl = new SObjectTreeLoader();
+        SObjectTreeBranchOperation accOperation = stl.addOperation(Account.SObjectType)
+            .addFactory(new SObjectTreeLoaderMocks.DefaultAccountFactoryMock());
+        List<Account> accs = (List<Account>) accOperation.getRecords();
+
+        // Assert
+        System.Assert.areEqual(1, accs.size(), 'number of accs created');
+        System.Assert.areEqual('Test Account From Default Mock', accs[0].Name, 'account name');
+        System.Assert.areEqual(new Set<String>{ 'AccountRef1' }, accOperation.getTreeRecords().keySet(), 'tree records key set');
+    }
+
+    @isTest
     static void getOperation_SetFieldValue_PrototypeValuesOverridden() {
         // Arrange
         SObjectTreeLoader dl = TestData.newSObjectTreeLoader('Test_Data_Loader_Testing_Complex_Plan');

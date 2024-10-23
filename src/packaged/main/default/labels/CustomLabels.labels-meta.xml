@@ -295,7 +295,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Deserialization exception when invalid plan file is supplied</shortDescription>
-        <value>Dannot deserialize file to a valid test data plan: {0}</value>
+        <value>Cannot deserialize file to a valid test data plan: {0}</value>
     </labels>
     <labels>
         <fullName>Invalid_Reference_SObject_Field_Misses_Identifier</fullName>
