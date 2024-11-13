@@ -1,0 +1,25 @@
+{
+  "records": [
+    {
+      "attributes": {
+        "referenceId": "CaseRef1"
+      },
+      "Subject": "Test Case 1",
+      "AccountId": "@Starship"
+    },
+    {
+      "attributes": {
+        "referenceId": "CaseRef2"
+      },
+      "Subject": "Test Case 2",
+      "AccountId": "@Starship"
+    },
+    {
+      "attributes": {
+        "referenceId": "CaseRef3"
+      },
+      "Subject": "Test Case 3",
+      "AccountId": "@ColonialOne"
+    }
+  ]
+}
