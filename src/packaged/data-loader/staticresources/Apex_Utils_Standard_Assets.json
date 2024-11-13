@@ -1,0 +1,29 @@
+{
+  "records": [
+    {
+      "attributes": {
+        "type": "Asset",
+        "referenceId": "StandardAsset1"
+      },
+      "AccountId": "@Starship",
+      "ContactId": "@ContactRef1",
+      "Name": "Test Asset 1"
+    },
+    {
+      "attributes": {
+        "type": "Asset",
+        "referenceId": "StandardAsset2"
+      },
+      "AccountId": "@ColonialOne",
+      "Name": "Test Asset 2"
+    },
+    {
+      "attributes": {
+        "type": "Asset",
+        "referenceId": "StandardAsset3"
+      },
+      "AccountId": "@CloudNine",
+      "Name": "Test Asset 3"
+    }
+  ]
+}
