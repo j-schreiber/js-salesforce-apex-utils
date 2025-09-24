@@ -5,6 +5,7 @@
  * @see ExtendedDescribeSObjectResult
  */
 global class ExtendedSchema {
+    @testVisible
     static Map<String, ExtendedDescribeSObjectResult> describeResults = new Map<String, ExtendedDescribeSObjectResult>();
 
     global static ExtendedDescribeSObjectResult describeSObject(String sobjectName) {
@@ -24,7 +25,7 @@ global class ExtendedSchema {
         }
         if (!undescribedSobjects.isEmpty()) {
             List<Schema.DescribeSObjectResult> results = Schema.describeSObjects(undescribedSobjects);
-            for (Integer i = 0; i < undescribedSobjects.size() - 1; i++) {
+            for (Integer i = 0; i < undescribedSobjects.size(); i++) {
                 describeResults.put(undescribedSobjects[i].toLowerCase(), new ExtendedDescribeSObjectResult(results[i]));
             }
         }

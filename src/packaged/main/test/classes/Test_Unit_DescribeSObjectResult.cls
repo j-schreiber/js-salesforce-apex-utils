@@ -72,6 +72,17 @@ public class Test_Unit_DescribeSObjectResult {
     }
 
     @isTest
+    static void describeSObjects_WithSingleValidSObject_ReturnsDescribeResults() {
+        // ACT
+        Map<String, ExtendedDescribeSObjectResult> describeResults = ExtendedSchema.describeSObjects(new Set<String>{ 'Account' });
+
+        // ASSERT
+        System.Assert.areEqual(1, describeResults.size(), 'map size');
+        System.Assert.areEqual('Account', describeResults.get('Account').getResult().getName(), 'initialises describe result');
+        System.Assert.isTrue(ExtendedSchema.describeResults.containsKey('account'), 'account result is cached');
+    }
+
+    @isTest
     static void getField_IsInvalidFieldName_ThrowsIllegalArgumentException() {
         // ARRANGE
         ExtendedDescribeSObjectResult describeResult = new ExtendedDescribeSObjectResult(Account.SObjectType);
