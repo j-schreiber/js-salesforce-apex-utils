@@ -79,6 +79,7 @@ public class Test_Unit_DescribeSObjectResult {
         // ASSERT
         System.Assert.areEqual(1, describeResults.size(), 'map size');
         System.Assert.areEqual('Account', describeResults.get('Account').getResult().getName(), 'initialises describe result');
+        System.Assert.isTrue(ExtendedSchema.describeResults.containsKey('account'), 'account result is cached');
     }
 
     @isTest

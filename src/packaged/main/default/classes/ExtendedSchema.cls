@@ -5,6 +5,7 @@
  * @see ExtendedDescribeSObjectResult
  */
 global class ExtendedSchema {
+    @testVisible
     static Map<String, ExtendedDescribeSObjectResult> describeResults = new Map<String, ExtendedDescribeSObjectResult>();
 
     global static ExtendedDescribeSObjectResult describeSObject(String sobjectName) {
